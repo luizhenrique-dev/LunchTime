@@ -28,13 +28,13 @@ and open the template in the editor.
                         <td>Entrar automaticamente</td></tr>
                 </table>
                 <br />
-                <input id="botaoLogin" type="submit" value="Entrar" />
+                <input class="botao" type="submit" value="Entrar" />
                 <script>
                     document.getElementById("login").j_username.value = "#{SPRING_SECURITY_LAST_USERNAME}";
                 </script>
             </form>
             <br />
-            <p:outputLabel value="Não é cadastrado?" />
+            <b><p:outputLabel value="Não é cadastrado?" /></b>
             <h:form>
                 <h:commandButton class="botao" action="#{usuarioBean.novo}" value="Cadastre-se" />
             </h:form>
