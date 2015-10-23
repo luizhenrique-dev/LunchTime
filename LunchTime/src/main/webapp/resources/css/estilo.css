@@ -1,0 +1,135 @@
+.colunaDireita{  
+    text-align: left;  
+}  
+.colunaEsquerda{  
+    font-weight: bold;
+    text-align: right;    
+}  
+
+.colunaCentro{  
+    font-weight: bold;
+    text-align: center;    
+}  
+
+.colunaCentroPlano{  
+    font-weight: bold;
+    text-align: center;   
+} 
+
+.painel {
+    line-height:150%;
+    border: 1px solid;
+    border-color: #919191;
+    color: #646264;
+}
+
+.ui-top, .ui-top .ui-layout, .ui-top .ui-layout-bd, .ui-top .ui-layout-unit {
+    background-color: #FFD8AA;
+}
+
+.ui-layout-unit-content{
+    background-color: #FFD8AA;
+    color: black;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
+}
+
+.ui-menu
+{
+
+}
+
+.ui-menu-unit
+{
+    background-color: black;
+}
+
+/*.ui-menuitem-text{
+    color:black;
+}*/
+
+body {
+    background-color:#DB5B24;
+    font-size: 12px;
+}
+.layoutPrincipal {
+    min-width:1024px;max-width:1024px;min-height:768px;max-height:768px;
+}
+#botaoLogin {
+    background:url('https://dh3vbjnk0bnfa.cloudfront.net/static/centralauth/images/btn-login.png') no-repeat 5px 5px #484B4F;
+    background-color: #DB5B24;
+    width: 100px;
+    cursor:pointer;
+    border-radius:50px;
+    padding:10px 20px 10px 0;
+    color:White;
+    font-size:14px;
+    text-align:left;
+    text-indent:40px;
+    margin:0 auto;
+    font-weight: bold;
+
+    /* Animations: */
+    -webkit-transition-timing-function: ease-in-out;
+    -webkit-transition-duration: .4s;
+    -webkit-transition-property: all;
+
+    -moz-transition-timing-function: ease-in-out;
+    -moz-transition-duration: .4s;
+    -moz-transition-property: all;
+}
+
+#botaoLogin:hover {
+    background-image: url('https://dh3vbjnk0bnfa.cloudfront.net/static/centralauth/images/btn-login-hover.png');
+    background-position: 65px 5px;
+    text-indent: 20px;  
+}
+
+.inputLogin
+{
+    display:block;
+    margin:0px auto 5px;
+    border-radius:5px;
+    width:75%;
+    padding:5px 10px 5px 5px;
+    border:none;                
+    box-shadow:inset 0px 1px 5px #272727;
+    -webkit-transition:0.5s ease;
+    -moz-transition:0.5s ease;
+    -o-transition:0.5s ease;
+    -ms-transition:0.5s ease;
+    transition:0.5s ease; 
+}
+
+.botao {
+    background-color: #DB5B24;
+    cursor:pointer;
+    border-radius:15px;
+    padding:7px 15px 7px 15px;
+    color:white;
+    font-size:14px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.botao:hover {
+    color:black;
+}
+
+.perfil {
+    margin-left: 60px;
+    text-align: right;
+    margin-top: 7px;
+    font-weight: bold;
+}
+
+#titulo {
+    padding-top: 50px;
+    font-size: 29pt;
+    font-variant: small-caps;
+    font-weight: bold;
+}
+
+#logo {
+    text-align: right;
+    float:right;
+}
