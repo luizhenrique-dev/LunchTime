@@ -1,2 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context antiJARLocking="true" path="/LunchTime"/>
+<Context antiJARLocking="true" path="/LunchTime">
+<Resource 
+        auth="Container" 
+        driverClassName="com.mysql.jdbc.Driver" 
+        maxActive="200" 
+        maxIdle="30" 
+        maxWait="10000" 
+        name="jdbc/LunchTimeDB" 
+        password="@LunchTime@@93" 
+        type="javax.sql.DataSource" 
+        url="jdbc:mysql://localhost:3306/lunchtimedb?autoReconnect=true" 
+        username="lunchtime"
+        validationQuery="Select 1" />
+</Context>

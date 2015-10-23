@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.dbserver.lunchtime.modelo;
+package br.com.dbserver.lunchtime.entidade;
 
 import java.io.Serializable;
 import java.util.Date;
