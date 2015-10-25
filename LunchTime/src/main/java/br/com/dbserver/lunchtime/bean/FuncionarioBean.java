@@ -9,6 +9,7 @@ import br.com.dbserver.lunchtime.entidade.Funcionario;
 import br.com.dbserver.lunchtime.negocio.FuncionarioRN;
 import java.util.List;
 import javax.faces.application.FacesMessage;
+import javax.faces.application.FacesMessage.Severity;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
@@ -33,29 +34,18 @@ public class FuncionarioBean {
     }
 
     public void salvar() {
-        FacesContext context = FacesContext.getCurrentInstance();
         String senha = this.funcionario.getSenha();
         if (senha.equals(this.confirmaSenha)) {
             this.funcionario.setSenha(criptografaSenha(senha));
             this.funcionario.setAtivo(true);
-            FuncionarioRN funcionarioRN = new FuncionarioRN();
 
-            if (!verificaFuncionarioExistenteEmail(funcionario.getEmail())) {
-                if (!verificaFuncionarioExistenteCodigo(funcionario.getCodigoFuncionarioNaEmpresa())) {
-                    funcionarioRN.salvar(this.funcionario);
-                    FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Successo no cadastro.", "Funcionário cadastrado com sucesso!");
-                    context.addMessage(null, facesMessage);
-                } else {
-                    FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Já existe um usuário funcionário com este código na empresa!", "Erro");
-                    context.addMessage(null, facesMessage);
-                }
-            } else {
-                FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Já existe um funcionário cadastrado com este e-mail!", "Erro");
-                context.addMessage(null, facesMessage);
+            if (validaNovoFuncionario()) {
+                FuncionarioRN funcionarioRN = new FuncionarioRN();
+                funcionarioRN.salvar(this.funcionario);
+                enviaMensagemFaces(FacesMessage.SEVERITY_INFO, "Clique em 'Voltar' e efetue o login.", "Funcionário cadastrado com sucesso!");
             }
         } else {
-            FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "As senhas digitadas não conferem!", "Erro");
-            context.addMessage(null, facesMessage);
+            enviaMensagemFaces(FacesMessage.SEVERITY_ERROR, "Erro", "As senhas digitadas não conferem!");
         }
     }
 
@@ -112,18 +102,51 @@ public class FuncionarioBean {
     }
 
     private boolean verificaFuncionarioExistenteEmail(String email) {
-         FuncionarioRN funcionarioRN = new FuncionarioRN();
-         if (funcionarioRN.buscaPorEmail(email) != null) {
-             return true;
-         }
-         return false;
+        FuncionarioRN funcionarioRN = new FuncionarioRN();
+        if (funcionarioRN.buscaPorEmail(email) != null) {
+            return true;
+        }
+        return false;
     }
 
     private boolean verificaFuncionarioExistenteCodigo(String codigo) {
         FuncionarioRN funcionarioRN = new FuncionarioRN();
-        if (funcionarioRN.buscaPorCodigoFuncionarioNaEmpresa(codigo) != null){
+        if (funcionarioRN.buscaPorCodigoFuncionarioNaEmpresa(codigo) != null) {
             return true;
         }
         return false;
+    }
+
+    private boolean verificaFuncionarioExistenteLogin(String login) {
+        FuncionarioRN funcionarioRN = new FuncionarioRN();
+        if (funcionarioRN.buscaPorLogin(login) != null) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean validaNovoFuncionario() {
+        if (!verificaFuncionarioExistenteEmail(funcionario.getEmail())) {
+            if (!verificaFuncionarioExistenteCodigo(funcionario.getCodigoFuncionarioNaEmpresa())) {
+                if (!verificaFuncionarioExistenteLogin(funcionario.getLogin())) {
+                    return true;
+                } else {
+                    enviaMensagemFaces(FacesMessage.SEVERITY_ERROR, "Erro", "Já existe um funcionário com este login!");
+                    return false;
+                }
+            } else {
+                enviaMensagemFaces(FacesMessage.SEVERITY_ERROR, "Erro", "Já existe um funcionário com este código na empresa!");
+                return false;
+            }
+        } else {
+            enviaMensagemFaces(FacesMessage.SEVERITY_ERROR, "Erro", "Já existe um funcionário cadastrado com este e-mail!");
+            return false;
+        }
+    }
+
+    private void enviaMensagemFaces(Severity severidade, String titulo, String conteudo) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        FacesMessage facesMessage = new FacesMessage(severidade, conteudo, titulo);
+        context.addMessage(null, facesMessage);
     }
 }

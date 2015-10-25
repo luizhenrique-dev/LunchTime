@@ -68,6 +68,14 @@ public class FuncionarioDAOHibernate implements FuncionarioDAO {
     }
 
     @Override
+    public Funcionario buscarPorLogin(String login) {
+        String hql = "from Funcionario u where u.login = :login";
+        Query consulta = this.session.createQuery(hql);
+        consulta.setString("login", login);
+        return (Funcionario) consulta.uniqueResult();
+    }
+
+    @Override
     public List<Funcionario> listar() {
         Criteria criteria = this.session.createCriteria(Funcionario.class);
         criteria.addOrder(Order.asc("nome"));

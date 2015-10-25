@@ -21,7 +21,7 @@
             <jdbc-user-service data-source-ref="lunchtimeDataSource"
                                authorities-by-username-query="SELECT u.login, p.permissao 
                            FROM funcionario u, funcionario_permissao p 
-                          WHERE u.id = p.usuario 
+                          WHERE u.id = p.funcionario
                             AND u.login = ?"
                                users-by-username-query="SELECT login, senha, ativo 
              FROM funcionario 

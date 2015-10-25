@@ -28,4 +28,6 @@ public interface FuncionarioDAO {
     public Funcionario buscarPorCodigoFuncionarioNaEmpresa(String codigoFuncionario);
 
     public Funcionario buscarPorEmail(String email);
+    
+    public Funcionario buscarPorLogin(String login);
 }

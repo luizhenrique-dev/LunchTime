@@ -31,6 +31,10 @@ public class FuncionarioRN {
         return this.funcionarioDAO.buscarPorCodigoFuncionarioNaEmpresa(codigo);
     }
 
+    public Funcionario buscaPorLogin(String login) {
+        return this.funcionarioDAO.buscarPorLogin(login);
+    }
+
     public Funcionario buscaPorEmail(String email) {
         return this.funcionarioDAO.buscarPorEmail(email);
     }

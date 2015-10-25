@@ -36,16 +36,14 @@ public class Funcionario implements Serializable {
     @GeneratedValue
     private Integer id;
     private String nome;
-    private String telefone;
     @Column(unique = true)
     private String email;
     @Column(name = "codigo_func_empresa", unique = true)
     private String codigoFuncionarioNaEmpresa;
     private String senha;
     private boolean ativo;
-    @Column(name = "data_nascimento", nullable = false)
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date dataNascimento;
+    @Column(unique = true)
+    private String login;
     @Column(name = "data_cadastro", nullable = false)
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataCadastro;
@@ -83,14 +81,6 @@ public class Funcionario implements Serializable {
         this.nome = nome;
     }
 
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -123,14 +113,6 @@ public class Funcionario implements Serializable {
         this.ativo = ativo;
     }
 
-    public Date getDataNascimento() {
-        return dataNascimento;
-    }
-
-    public void setDataNascimento(Date dataNascimento) {
-        this.dataNascimento = dataNascimento;
-    }
-
     public Date getDataCadastro() {
         return dataCadastro;
     }
@@ -155,6 +137,14 @@ public class Funcionario implements Serializable {
         this.codigoFuncionarioNaEmpresa = codigoFuncionarioNaEmpresa;
     }
 
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+    
     private static final long serialVersionUID = -4009532420773848278L;
 
     @Override
@@ -162,7 +152,6 @@ public class Funcionario implements Serializable {
         int hash = 7;
         hash = 83 * hash + (this.id != null ? this.id.hashCode() : 0);
         hash = 83 * hash + (this.nome != null ? this.nome.hashCode() : 0);
-        hash = 83 * hash + (this.telefone != null ? this.telefone.hashCode() : 0);
         hash = 83 * hash + (this.email != null ? this.email.hashCode() : 0);
         hash = 83 * hash + (this.codigoFuncionarioNaEmpresa != null ? this.codigoFuncionarioNaEmpresa.hashCode() : 0);
         hash = 83 * hash + (this.ativo ? 1 : 0);

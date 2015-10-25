@@ -14,7 +14,7 @@ and open the template in the editor.
         <ui:define name="corpo">
             <h3>Cadastro de Novos Funcionários</h3>
             <h:form id="cadastro">
-                <p:messages id="messages" autoUpdate="true" closable="true"/>
+                <p:messages id="messages" autoUpdate="true" closable="true" showDetail="true"/>
                 <p:growl id="growl" showDetail="true" sticky="true" life="2000"/>  
                 <h:inputHidden value="#{funcionarioBean.funcionario.id}" />
 
@@ -24,11 +24,8 @@ and open the template in the editor.
                         <f:validateLength minimum="10" maximum="255" />
                     </p:inputText>
 
-                    <p:outputLabel value="Telefone:" for="telefone" />
-                    <p:inputText id="telefone" label="Telefone" value="#{funcionarioBean.funcionario.telefone}" size="15" maxlength="13" required="true" requiredMessage="Informe o telefone."/>
-                    
                     <p:outputLabel value="Código na empresa:" for="codEmpresa" />
-                    <p:inputText id="codEmpresa" label="código na empresa" value="#{funcionarioBean.funcionario.telefone}" size="15" maxlength="13" required="true" requiredMessage="Informe o seu código na empresa."/>
+                    <p:inputText id="codEmpresa" label="código na empresa" value="#{funcionarioBean.funcionario.codigoFuncionarioNaEmpresa}" size="15" maxlength="255" required="true" requiredMessage="Informe o seu código na empresa."/>
 
                     <p:outputLabel value="E-mail:" for="email" />
                     <h:panelGroup>
@@ -37,12 +34,15 @@ and open the template in the editor.
                         </p:inputText>
                     </h:panelGroup>
 
-                    <p:outputLabel value="Data de Nascimento:" for="datanascimento" />
-                    <p:calendar locale="pt_BR" id="datanascimento" required="true" size="15" label="Data de Nascimento" value="#{funcionarioBean.funcionario.dataNascimento}" 
-                                navigator="true" mindate="1/1/1925" effect="fold" pagedate="1/1/1990" pattern="dd/MM/yyyy" /> 
+                    <p:outputLabel value="Login:" for="login" />
+                    <p:inputText id="login" label="Login" value="#{funcionarioBean.funcionario.login}" size="10" required="true" requiredMessage="Informe o seu login.">
+                        <f:validateLength minimum="5" maximum="255"  />
+                    </p:inputText>
 
                     <p:outputLabel value="Senha:" for="senha" />
-                    <p:password id="senha" label="Senha" value="#{funcionarioBean.funcionario.senha}" size="10" required="true" redisplay="true" />
+                    <p:password id="senha" label="Senha" value="#{funcionarioBean.funcionario.senha}" size="10" required="true" redisplay="true">
+                        <f:validateLength minimum="8" maximum="16"  />
+                    </p:password>
 
                     <p:outputLabel value="Confirmar Senha:" for="confirmarsenha" />
                     <p:password id="confirmarsenha" label="Confirmar Senha" value="#{funcionarioBean.confirmaSenha}" size="10" required="true" redisplay="true" />

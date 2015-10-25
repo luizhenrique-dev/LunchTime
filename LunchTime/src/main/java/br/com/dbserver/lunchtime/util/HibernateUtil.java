@@ -22,11 +22,9 @@ public class HibernateUtil {
         try {
             Configuration cfg = new Configuration();
             cfg.configure("hibernate.cfg.xml");
-
             StandardServiceRegistryBuilder serviceRegistryBuilder = new StandardServiceRegistryBuilder();
             serviceRegistryBuilder.applySettings(cfg.getProperties());
             ServiceRegistry serviceRegistry = serviceRegistryBuilder.build();
-            System.out.println("CONECTOOOOOU!!");
             return cfg.buildSessionFactory(serviceRegistry);
 
         } catch (Throwable e) {

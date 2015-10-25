@@ -33,7 +33,9 @@ public class ConexaoHibernateFilter implements Filter {
             this.sf.getCurrentSession().close();
         } catch (Throwable ex) {
             try {
-                this.sf.getCurrentSession().getTransaction().rollback();
+                if (this.sf.getCurrentSession().getTransaction().isActive()) {
+                    this.sf.getCurrentSession().getTransaction().rollback();
+                }
             } catch (Throwable t) {
                 t.printStackTrace();
             }
