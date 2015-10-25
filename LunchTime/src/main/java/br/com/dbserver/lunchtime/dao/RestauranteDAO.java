@@ -5,7 +5,7 @@
  */
 package br.com.dbserver.lunchtime.dao;
 
-import br.com.dbserver.lunchtime.entidade.Voto;
+import br.com.dbserver.lunchtime.entidade.Restaurante;
 import java.util.List;
 
 /**
@@ -14,13 +14,13 @@ import java.util.List;
  */
 public interface RestauranteDAO {
 
-    public void salvar(Voto voto);
+    public void salvar(Restaurante restaurante);
 
-    public void atualizar(Voto voto);
+    public void atualizar(Restaurante restaurante);
 
-    public void excluir(Voto voto);
+    public void excluir(Restaurante restaurante);
 
-    public Voto carregar(Integer codigo);
+    public Restaurante carregar(Integer codigo);
 
-    public List<Voto> listar();
+    public List<Restaurante> listar();
 }

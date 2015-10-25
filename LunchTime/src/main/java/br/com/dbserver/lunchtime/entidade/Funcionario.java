@@ -39,7 +39,7 @@ public class Funcionario implements Serializable {
     private String telefone;
     @Column(unique = true)
     private String email;
-    @Column(unique = true)
+    @Column(name = "codigo_func_empresa", unique = true)
     private String codigoFuncionarioNaEmpresa;
     private String senha;
     private boolean ativo;
