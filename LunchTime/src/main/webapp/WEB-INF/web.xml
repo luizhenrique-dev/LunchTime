@@ -23,6 +23,16 @@
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.jsf</url-pattern>
     </servlet-mapping>
+    
+    <!-- Filtro Hibernate -->
+    <filter>
+        <filter-name>conexaoFilter</filter-name>
+        <filter-class>br.com.dbserver.lunchtime.util.ConexaoHibernateFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>conexaoFilter</filter-name>
+        <url-pattern>*.jsf</url-pattern>
+    </filter-mapping>
 
     <session-config>
         <session-timeout>

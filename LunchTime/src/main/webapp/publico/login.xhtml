@@ -13,7 +13,7 @@ and open the template in the editor.
     <ui:composition template="/templates/principal.xhtml" >
         <ui:define name="corpo">
             <h:panelGroup rendered="#{!empty param.login_error}">
-                <span style="color:red;"><b> Usuário ou senha incorretos. </b></span><br />
+                <span style="color:red;"><b> Login ou senha incorretos. </b></span><br />
                 <br />
                 <!--      Motivo: #SPRING_SECURITY_LAST_EXCEPTION.message} -->
             </h:panelGroup>
@@ -36,7 +36,7 @@ and open the template in the editor.
             <br />
             <b><p:outputLabel value="Não é cadastrado?" /></b>
             <h:form>
-                <h:commandButton class="botao" action="#{usuarioBean.novo}" value="Cadastre-se" />
+                <h:commandButton class="botao" action="#{funcionarioBean.novo}" value="Cadastre-se" />
             </h:form>
 
         </ui:define>

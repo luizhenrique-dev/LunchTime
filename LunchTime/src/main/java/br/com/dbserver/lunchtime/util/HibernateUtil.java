@@ -26,6 +26,7 @@ public class HibernateUtil {
             StandardServiceRegistryBuilder serviceRegistryBuilder = new StandardServiceRegistryBuilder();
             serviceRegistryBuilder.applySettings(cfg.getProperties());
             ServiceRegistry serviceRegistry = serviceRegistryBuilder.build();
+            System.out.println("CONECTOOOOOU!!");
             return cfg.buildSessionFactory(serviceRegistry);
 
         } catch (Throwable e) {
