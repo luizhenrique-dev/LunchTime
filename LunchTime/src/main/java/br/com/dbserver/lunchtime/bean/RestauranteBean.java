@@ -54,6 +54,10 @@ public class RestauranteBean {
         return "/restrito/restaurante";
 
     }
+    
+    public String listarRestaurantes(){
+        return "/restrito/restaurantes";
+    }
 
     public void excluir() {
         RestauranteRN restauranteRN = new RestauranteRN();

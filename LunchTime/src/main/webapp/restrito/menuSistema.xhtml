@@ -16,30 +16,34 @@ and open the template in the editor.
             <h:form>
                 <p:menubar>
                     <p:menuitem value="Início" url="/restrito/principal.jsf" icon="fa fa-home" />  
-                    
+
                     <p:submenu label="Eleição" icon="fa fa-list-alt">
                         <p:menuitem value="Escolher Restaurante" url="/restrito/votar.jsf" icon="fa fa-thumbs-up" />  
                         <p:menuitem value="Acompanhar Votação" url="/restrito/acompanharVotacao.jsf" icon="fa fa-bar-chart-o" />
-                        <p:menuitem value="Histórico" url="/restrito/historicoVotacao.jsf" icon="fa fa-list-ul" />
+                        <p:menuitem value="HistÃ³rico" url="/restrito/historicoVotacao.jsf" icon="fa fa-list-ul" />
                     </p:submenu>
 
                     <p:menuitem value="Restaurantes" url="/restrito/restaurantes.jsf" icon=" fa fa-list-ul" />  
 
-                    <p:menuitem><span id="boasVindas">Olá, </span><div class="perfil"><p:commandLink action="#{funcionarioBean.editar}" value="#{contextoBean.funcionarioLogado.nome}">
-                                <f:setPropertyActionListener target="#{funcionarioBean.funcionario}" value="#{contextoBean.funcionarioLogado}" />
-                            </p:commandLink>
-                        </div>
-                    </p:menuitem>
-                    <p:menuitem value="Logout" url="#{request.contextPath}/j_spring_security_logout" icon="fa fa-sign-out" />    
+                    <f:facet name="options">
+                        Olá, <p:commandLink styleClass="perfil" action="#{funcionarioBean.editar}" value="#{contextoBean.funcionarioLogado.nome}">
+                            <f:setPropertyActionListener target="#{funcionarioBean.funcionario}" value="#{contextoBean.funcionarioLogado}" />
+                        </p:commandLink>  
+
+                    </f:facet>           
 
                     <sec:authorize ifAnyGranted="ROLE_ADMINISTRADOR">
                         <p:submenu label="Administração" icon="fa fa-key">
                             <p:menuitem value="Funcionários" url="/admin/funcionarios.jsf" icon="fa fa-users" />
-                            <p:menuitem value="Restaurantes" url="/admin/restaurantes.jsf" icon="fa fa-list-ul" />   
+                            <p:submenu label="Restaurantes" icon="fa fa-list-ul">
+                                <p:menuitem value="Novo" url="/admin/cadastrarRestaurante.jsf" />
+                                <p:menuitem value="Mostrar todos" url="/admin/restaurantes.jsf" />
+                            </p:submenu>  
                             <p:menuitem value="Votações" url="/admin/votacoes.jsf" icon="fa fa-list-alt" />       
                         </p:submenu>
                     </sec:authorize>
 
+                    <p:menuitem value="Logout" url="#{request.contextPath}/j_spring_security_logout" icon="fa fa-sign-out" />
                 </p:menubar>
             </h:form>
         </sec:authorize>

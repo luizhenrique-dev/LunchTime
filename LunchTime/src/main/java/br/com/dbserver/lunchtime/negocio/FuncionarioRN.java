@@ -39,6 +39,10 @@ public class FuncionarioRN {
     public Funcionario buscaPorEmail(String email) {
         return this.funcionarioDAO.buscarPorEmail(email);
     }
+    
+    public String getEmailFuncionario(Funcionario funcionario) {
+        return this.funcionarioDAO.carregar(funcionario.getId()).getEmail();
+    }
 
     public void salvar(Funcionario funcionario) throws DAOException{
         Integer codigo = funcionario.getId();

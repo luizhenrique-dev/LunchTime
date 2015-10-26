@@ -12,14 +12,13 @@ and open the template in the editor.
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <ui:composition template="/templates/interna.xhtml">
         <ui:define name="titulo" >
-            Administração de Restaurantes
+            Restaurantes
         </ui:define>
 
         <ui:define name="corpo">
-            <h4>Total de restaurantes: #{restauranteBean.lista.size()}</h4>
             <h:form id="listagem">
                 <p:dataTable id="tabelaRestaurantes" value="#{restauranteBean.lista}" var="restaurante" scrollable="false" 
-                             rowKey="#{restaurante.id}" paginator="true" rows="11" rowIndexVar="index" emptyMessage="Nenhum restaurante encontrado.">
+                             rowKey="#{restaurante.id}" paginator="true" rows="12" rowIndexVar="index" emptyMessage="Nenhum restaurante encontrado.">
                     <f:facet name="caption">
                         A listagem a seguir exibe a relação de todos os restaurantes cadastrados no sistema.
                     </f:facet>
@@ -43,32 +42,21 @@ and open the template in the editor.
                     <p:column width="70" headerText="Distância (Km)">
                         <h:outputText value="#{restaurante.distanciaAPartirDoLocalDeTrabalho}" />
                     </p:column>
+                    <p:column width="70" headerText="Abertura (hrs)">
+                        <h:outputText value="#{restaurante.horaAbertura}">
+                            <f:convertDateTime pattern="hh:mm" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column width="80" headerText="Encerramento (hrs)">
+                        <h:outputText value="#{restaurante.horaEncerramento}">
+                            <f:convertDateTime pattern="hh:mm" />
+                        </h:outputText>
+                    </p:column>
                     <p:column width="45">
                         <f:facet name="header">Detalhes</f:facet>
                         <div style="width: 100%; text-align: center;">  
                             <p:commandLink action="#{restauranteBean.verDetalhes}" update=":listagem:tabelaRestaurantes">
                                 <h:graphicImage library="imagens" name="detalhes16.png" style="border: 0" />
-                                <f:setPropertyActionListener target="#{restauranteUtilBean.restaurante}" value="#{restaurante}" />
-                            </p:commandLink>
-                        </div>
-                    </p:column>
-
-                    <p:column width="35">
-                        <f:facet name="header">Editar</f:facet>
-                        <div style="width: 100%; text-align: center;">  
-                            <p:commandLink action="#{restauranteBean.editar}" update=":listagem:tabelaRestaurantes">
-                                <h:graphicImage library="imagens" name="editar16.png" style="border: 0" />
-                                <f:setPropertyActionListener target="#{restauranteBean.restaurante}" value="#{restaurante}" />
-                            </p:commandLink>
-                        </div>
-                    </p:column>
-                    <p:column width="40">
-                        <f:facet name="header">Excluir</f:facet>
-                        <div style="width: 100%; text-align: center;">  
-                            <p:commandLink action="#{restauranteBean.excluir}" update=":listagem:tabelaRestaurantes"
-                                           onclick="if (!confirm('Confirma a exclusão do restaurante: #{restaurante.nome}?'))
-                                                       return false;">
-                                <h:graphicImage library="imagens" name="excluir16.png" style="border:0" />
                                 <f:setPropertyActionListener target="#{restauranteBean.restaurante}" value="#{restaurante}" />
                             </p:commandLink>
                         </div>

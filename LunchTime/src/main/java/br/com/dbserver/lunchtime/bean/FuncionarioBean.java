@@ -54,9 +54,29 @@ public class FuncionarioBean {
         }
     }
 
+    public void atualizar() {
+        String senha = this.funcionario.getSenha();
+        if (senha.equals(this.confirmaSenha)) {
+            this.funcionario.setSenha(criptografaSenha(senha));
+            this.funcionario.setAtivo(true);
+            FuncionarioRN funcionarioRN = new FuncionarioRN();
+            
+            if (funcionarioRN.buscaPorEmail(funcionario.getEmail()) == null || funcionarioRN.getEmailFuncionario(funcionario).equals(funcionario.getEmail())) {
+                try {
+                    funcionarioRN.salvar(this.funcionario);
+                    enviaMensagemFaces(FacesMessage.SEVERITY_INFO, "Sucesso.", "Perfil atualizado com sucesso!");
+                } catch (DAOException e) {
+                    enviaMensagemFaces(FacesMessage.SEVERITY_ERROR, "Erro: " + e.getMessage(), "Não foi possível atualizar seu perfil! Se o problema persistir entre em contato com o administrador.");
+                }
+            }
+        } else {
+            enviaMensagemFaces(FacesMessage.SEVERITY_ERROR, "Erro", "As senhas digitadas não conferem!");
+        }
+    }
+
     public String editar() {
         this.lista = null;
-        return "cadastrarFuncionario";
+        return "funcionario";
     }
 
     public void excluir() {

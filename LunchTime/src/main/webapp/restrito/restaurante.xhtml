@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:composition template="/templates/interna.xhtml">
+        <ui:define name="titulo">Detalhes Restaurante</ui:define>
+        <ui:define name="corpo">
+            <h3>Informações detalhadas do restaurante</h3>
+            <h:form id="cadastro">
+                <p:messages id="messages" autoUpdate="true" closable="true"/>
+
+                <p:panelGrid columns="2" columnClasses="colunaEsquerda,colunaDireita">
+                    <p:outputLabel value="Nome:" for="nome"/>
+                    <p:outputLabel id="nome" value="#{restauranteBean.restaurante.nome}" />
+
+                    <p:outputLabel value="Tipo do Almoço:" for="tipoAlmoco"/>  
+                    <p:outputLabel id="tipoAlmoco" value="#{restauranteBean.restaurante.tipoAlmoco}"/>  
+
+                    <p:outputLabel value="Preço (R$):" for="preco" />
+                    <p:outputLabel id="preco" value="#{restauranteBean.restaurante.preco}"/>
+
+                    <p:outputLabel value="Endereço:" for="endereco" />
+                    <p:outputLabel id="endereco" value="#{restauranteBean.restaurante.endereco}"/>
+
+                    <p:outputLabel value="Tipo da comida:" for="tipoComida" />
+                    <p:outputLabel id="tipoComida" value="#{restauranteBean.restaurante.tipoComida}" />
+
+                    <p:outputLabel value="Distância (Km):" for="distancia" />
+                    <p:outputLabel id="distancia" value="#{restauranteBean.restaurante.distanciaAPartirDoLocalDeTrabalho}" />
+
+                    <p:outputLabel value="Formas de pagamento:" for="formasPagamento" />
+                    <p:outputLabel id="formasPagamento" value="#{restauranteBean.restaurante.formasDePagamento}"  />
+
+                    <p:outputLabel for="horaAbertura" value="Horário de abertura:" />
+                    <p:outputLabel id="horaAbertura" value="#{restauranteBean.restaurante.horaAbertura}">
+                        <f:convertDateTime pattern="hh:mm a" />
+                    </p:outputLabel> 
+
+                    <p:outputLabel for="horaEncerra" value="Horário que fecha:" />
+                    <p:outputLabel id="horaEncerra" value="#{restauranteBean.restaurante.horaEncerramento}">
+                        <f:convertDateTime pattern="hh:mm a" />
+                    </p:outputLabel> 
+
+                    <p:outputLabel for="horaDePico" value="Horário de pico:" />
+                    <p:outputLabel id="horaDePico" value="#{restauranteBean.restaurante.horarioDePico}">
+                        <f:convertDateTime pattern="hh:mm a" />
+                    </p:outputLabel> 
+
+                    <p:outputLabel value="Possui estacionamento particular?" for="estacionamento" />
+                    <p:outputLabel id="estacionamento" value="#{restauranteBean.restaurante.possuiEstacionamentoParticular eq true ? 'Sim' : 'Não'}" />
+                </p:panelGrid>
+                <br />
+                <p:commandButton value="Voltar" action="#{restauranteBean.listarRestaurantes}" icon="ui-icon-arrowreturnthick-1-w" />
+            </h:form>
+            <br />
+        </ui:define>
+    </ui:composition>
+</html>
