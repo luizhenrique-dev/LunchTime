@@ -32,14 +32,15 @@ public class Restaurante implements Serializable {
     private float preco;
     private String endereco;
     private String tipoComida;
+    private String tipoAlmoco;
     private float distanciaAPartirDoLocalDeTrabalho;
     private String formasDePagamento;
     private boolean possuiEstacionamentoParticular;
 
-    @Column(name = "hora_inicio")
+    @Column(name = "hora_abertura")
     private Time horaAbertura;
 
-    @Column(name = "hora_fim")
+    @Column(name = "hora_fecha")
     private Time horaEncerramento;
 
     @Column(name = "horario_pico")
@@ -145,6 +146,14 @@ public class Restaurante implements Serializable {
 
     public void setListaVotos(List<Voto> listaVotos) {
         this.listaVotos = listaVotos;
+    }
+
+    public String getTipoAlmoco() {
+        return tipoAlmoco;
+    }
+
+    public void setTipoAlmoco(String tipoAlmoco) {
+        this.tipoAlmoco = tipoAlmoco;
     }
 
     @Override

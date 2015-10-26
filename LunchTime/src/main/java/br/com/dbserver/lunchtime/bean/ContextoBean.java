@@ -7,11 +7,13 @@ package br.com.dbserver.lunchtime.bean;
 
 import br.com.dbserver.lunchtime.entidade.Funcionario;
 import br.com.dbserver.lunchtime.negocio.FuncionarioRN;
+import br.com.dbserver.lunchtime.util.DAOException;
 import br.com.dbserver.lunchtime.util.RNException;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
@@ -38,8 +40,9 @@ public class ContextoBean {
                 this.funcionarioLogado = funcionarioRN.buscaPorLogin(login);
                 try {
                     funcionarioRN.salvar(funcionarioLogado);
-                } catch (RNException ex) {
-                    Logger.getLogger(ContextoBean.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (DAOException ex) {
+                    FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Não foi possível obter o usuário logado", "Erro");
+                    context.addMessage(null, facesMessage);
                 }
             }
         }

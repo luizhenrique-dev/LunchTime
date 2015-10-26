@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:composition template="/templates/interna.xhtml">
+        <ui:define name="titulo" >
+            Cadastrar Restaurante
+        </ui:define>
+        <ui:define name="corpo">
+            <br />
+            <h:form id="cadastro">
+                <p:messages id="messages" autoUpdate="true" closable="true" showDetail="true"/>
+                <p:growl id="growl" showDetail="true" sticky="true" life="2000"/>  
+                <h:inputHidden value="#{restauranteBean.restaurante.id}" />
+
+                <p:panelGrid columns="3" columnClasses="colunaEsquerda,colunaDireita,colunaExemplos">
+                    <p:outputLabel value="Nome:" for="nome" />
+                    <p:inputText id="nome" label="Nome" value="#{restauranteBean.restaurante.nome}" size="50" maxlength="255" required="true" requiredMessage="Informe o nome.">
+                        <f:validateLength minimum="3" maximum="255" />
+                    </p:inputText>
+                    <p:outputLabel value="Exemplo: Churrascaria Montana Grill" />
+
+                    <p:outputLabel value="Tipo do almoço:" for="tipoAlmoco" />
+                    <p:inputText id="tipoAlmoco" label="Tipo do almoço" value="#{restauranteBean.restaurante.tipoAlmoco}" size="20" maxlength="255" required="true" requiredMessage="Informe o tipo do almoço."/>
+                    <p:outputLabel value="Exemplo: Por kilo, por pessoa, rodízio." />
+
+                    <p:outputLabel value="Preço (R$):" for="preco" />
+                    <p:inputText id="preco" label="Preço" value="#{restauranteBean.restaurante.preco}" size="5" maxlength="35" required="true" requiredMessage="Informe o valor.">
+                        <f:convertNumber minFractionDigits="2" maxFractionDigits="2" />
+                    </p:inputText>
+                    <p:outputLabel value="Exemplo: 27,90" />
+
+                    <p:outputLabel value="Endereço:" for="endereco" />
+                    <p:inputText id="endereco" label="Endereço" value="#{restauranteBean.restaurante.endereco}" size="50" maxlength="255" />
+                    <p:outputLabel value="Exemplo: Avenida Anhanguera Nº35 Setor Marista." />
+
+                    <p:outputLabel value="Tipo da comida:" for="tipoComida" />
+                    <p:inputText id="tipoComida" label="Tipo da Comida" value="#{restauranteBean.restaurante.tipoComida}" size="15" maxlength="255"/>
+                    <p:outputLabel value="Exemplo: Japonesa, Italiana, Caseira e etc." />
+
+                    <p:outputLabel value="Distância (Km):" for="distancia" />
+                    <p:inputText id="distancia" label="Distância a partir do local de trabalho" value="#{restauranteBean.restaurante.distanciaAPartirDoLocalDeTrabalho}" size="5" />
+                    <p:outputLabel value="Exemplo: 2, 13, 22..." />
+
+                    <p:outputLabel value="Formas de pagamento:" for="formasPagamento" />
+                    <p:inputText id="formasPagamento" label="Formas de pagamento" value="#{restauranteBean.restaurante.formasDePagamento}" size="20" />
+                    <p:outputLabel value="Exemplo: Dinheiro, cartão, cheque, etc." />
+
+                    <p:outputLabel for="horaAbertura" value="Horário de abertura:" />
+                    <p:calendar id="horaAbertura" value="#{restauranteBean.horaAbertura}" pattern="HH:mm a" size="5" timeOnly="true" stepMinute="30"/>
+                    <h:outputLabel />
+
+                    <p:outputLabel for="horaEncerramento" value="Hora de ecerramento:" />
+                    <p:calendar id="horaEncerramento" value="#{restauranteBean.horaEncerramento}" pattern="HH:mm a" size="5" timeOnly="true" stepMinute="30"/>
+                    <h:outputLabel />
+
+                    <p:outputLabel for="horarioPico" value="Hora de pico:" />
+                    <p:calendar id="horarioPico" value="#{restauranteBean.horarioDePico}" pattern="HH:mm a" size="5" timeOnly="true" stepMinute="30"/>
+                    <h:outputText />
+
+                    <p:outputLabel value="Possui estacionamento particular?" for="estacionamento" />
+                    <p:selectOneRadio id="estacionamento" value="#{restauranteBean.restaurante.possuiEstacionamentoParticular}">
+                        <f:selectItem itemLabel="Sim" itemValue="true" />
+                        <f:selectItem itemLabel="Não" itemValue="false" />
+                    </p:selectOneRadio>
+
+                </p:panelGrid>
+
+                <p:outputLabel value="Os campos com * são obrigatórios" /> <br />
+
+                <p:commandButton value="Cadastrar" action="#{restauranteBean.salvar}" update="growl" icon="fa fa-save" />
+            </h:form>
+            <h:form>
+                <br />
+                <p:commandButton value="Voltar" action="/restrito/principal" icon="ui-icon-arrowreturnthick-1-w" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

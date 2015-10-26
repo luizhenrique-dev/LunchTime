@@ -7,7 +7,7 @@ package br.com.dbserver.lunchtime.bean;
 
 import br.com.dbserver.lunchtime.entidade.Funcionario;
 import br.com.dbserver.lunchtime.negocio.FuncionarioRN;
-import br.com.dbserver.lunchtime.util.RNException;
+import br.com.dbserver.lunchtime.util.DAOException;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
@@ -45,7 +45,7 @@ public class FuncionarioBean {
                     FuncionarioRN funcionarioRN = new FuncionarioRN();
                     funcionarioRN.salvar(this.funcionario);
                     enviaMensagemFaces(FacesMessage.SEVERITY_INFO, "Clique em 'Voltar' e efetue o login.", "Funcionário cadastrado com sucesso!");
-                } catch (RNException e) {
+                } catch (DAOException e) {
                     enviaMensagemFaces(FacesMessage.SEVERITY_ERROR, "Erro: " + e.getMessage(), "Não foi possível cadastrar o funcionário! Se o problema persistir entre em contato com o administrador.");
                 }
             }

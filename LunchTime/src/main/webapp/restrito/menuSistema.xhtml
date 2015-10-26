@@ -33,10 +33,10 @@ and open the template in the editor.
                     <p:menuitem value="Logout" url="#{request.contextPath}/j_spring_security_logout" icon="fa fa-sign-out" />    
 
                     <sec:authorize ifAnyGranted="ROLE_ADMINISTRADOR">
-                        <p:submenu label="Administração">
+                        <p:submenu label="Administração" icon="fa fa-key">
                             <p:menuitem value="Funcionários" url="/admin/funcionarios.jsf" icon="fa fa-users" />
-                            <p:menuitem value="Restaurantes" url="/admin/restaurantes.jsf" icon="ui-icon-document" />   
-                            <p:menuitem value="Votação" url="/admin/votacoes.jsf" icon="ui-icon-document" />       
+                            <p:menuitem value="Restaurantes" url="/admin/restaurantes.jsf" icon="fa fa-list-ul" />   
+                            <p:menuitem value="Votações" url="/admin/votacoes.jsf" icon="fa fa-list-alt" />       
                         </p:submenu>
                     </sec:authorize>
 
