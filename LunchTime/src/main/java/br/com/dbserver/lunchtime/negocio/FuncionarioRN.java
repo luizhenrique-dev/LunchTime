@@ -8,6 +8,7 @@ package br.com.dbserver.lunchtime.negocio;
 import br.com.dbserver.lunchtime.dao.FuncionarioDAO;
 import br.com.dbserver.lunchtime.entidade.Funcionario;
 import br.com.dbserver.lunchtime.util.DAOFactory;
+import br.com.dbserver.lunchtime.util.RNException;
 import java.util.Date;
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class FuncionarioRN {
         return this.funcionarioDAO.buscarPorEmail(email);
     }
 
-    public void salvar(Funcionario funcionario) {
+    public void salvar(Funcionario funcionario) throws RNException{
         Integer codigo = funcionario.getId();
         if (codigo == null || codigo == 0) {
             funcionario.setNome(funcionario.getNome().toUpperCase());

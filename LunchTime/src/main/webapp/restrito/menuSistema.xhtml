@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:sec="http://www.springframework.org/security/tags">
+    <ui:composition>
+        <sec:authorize ifAnyGranted="ROLE_USUARIO">
+            <h:form>
+                <p:menubar>
+                    <p:menuitem value="Início" url="/restrito/principal.jsf" icon="fa fa-home" />  
+
+                    <p:submenu label="Voto" icon="fa fa-list-alt">
+                        <p:menuitem value="Realizar Voto" url="/restrito/votar.jsf" icon="fa fa-list-ul" />  
+                        <p:menuitem value="Acompanhar Votação" url="/restrito/acompanharVotacao.jsf" icon="fa fa-list-ul" />
+                        <p:menuitem value="Histórico" url="/restrito/historicoVotacao.jsf" icon="fa fa-list-ul" />
+                    </p:submenu>
+
+                    <p:menuitem value="Restaurantes" url="/restrito/restaurantes.jsf" icon=" fa fa-sitemap" />  
+
+                    <p:menuitem><div class="perfil">Olá, <p:commandLink styleClass="nomeMenu" action="#{funcionarioBean.editar}" value="#{contextoBean.funcionarioLogado.nome}">
+                                <f:setPropertyActionListener target="#{funcionarioBean.funcionario}" value="#{contextoBean.funcionarioLogado}" />
+                            </p:commandLink>
+                        </div>
+                    </p:menuitem>
+                    <p:menuitem value="Logout" url="#{request.contextPath}/j_spring_security_logout" icon="fa fa-sign-out" />    
+
+                    <sec:authorize ifAnyGranted="ROLE_ADMINISTRADOR">
+                        <p:submenu label="Administração">
+                            <p:menuitem value="Funcionários" url="/admin/funcionarios.jsf" icon="ui-icon-document" />
+                            <p:menuitem value="Restaurantes" url="/admin/restaurantes.jsf" icon="ui-icon-document" />   
+                            <p:menuitem value="Votação" url="/admin/votacoes.jsf" icon="ui-icon-document" />       
+                        </p:submenu>
+                    </sec:authorize>
+
+                </p:menubar>
+            </h:form>
+        </sec:authorize>
+    </ui:composition>
+</html>

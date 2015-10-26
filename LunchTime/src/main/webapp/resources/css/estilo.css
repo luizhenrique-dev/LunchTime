@@ -51,6 +51,10 @@ body {
     min-width:1024px;max-width:1024px;min-height:768px;max-height:768px;
 }
 
+.nomeMenu {
+    font-weight: bold; color: #0078d7;
+}
+
 .botao  {
     font-size: 14px;
     color: #ffffff;
@@ -107,7 +111,6 @@ body {
 .perfil {
     margin-left: 60px;
     text-align: right;
-    margin-top: 7px;
     font-weight: bold;
 }
 

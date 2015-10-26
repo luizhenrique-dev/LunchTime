@@ -16,15 +16,19 @@
         <div align="center">
             <p:layout styleClass="layoutPrincipal">  
                 <p:layoutUnit position="north" size="125" styleClass="ui-top">  
-                    <ui:insert name="menu">
-                        <h:graphicImage library="imagens" name="logo_topo.png" /><br />
-                    </ui:insert>
+                    <div id="logo">
+                        <h:graphicImage library="imagens" name="logo_topo.png" />
+                    </div>
+                    <div id="titulo">
+                        <ui:insert name="titulo">LunchTime</ui:insert>
+                    </div>
                 </p:layoutUnit>
-                <p:layoutUnit position="center" size="200" styleClass="ui-top">  
+                <p:layoutUnit position="center" styleClass="ui-top">  
+                    <ui:include src="/restrito/menuSistema.xhtml"/>
                     <ui:insert name="corpo" />
                 </p:layoutUnit>
                 <p:layoutUnit position="south" size="60" styleClass="ui-top">
-                    <ui:insert name="rodape" id="rodape">
+                    <ui:insert name="rodape" class="rodape">
                         <b>LunchTime</b> - Escolha o local do seu almoço.<br /> Desenvolvido por <b>Luiz Henrique Fernandes da Silva</b>.<br />
                     </ui:insert>
                 </p:layoutUnit>
