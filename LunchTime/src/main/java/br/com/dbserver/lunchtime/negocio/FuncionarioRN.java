@@ -24,27 +24,27 @@ public class FuncionarioRN {
         this.funcionarioDAO = DAOFactory.criarFuncionarioDAO();
     }
 
-    public Funcionario carregar(Integer id) {
+    public Funcionario carregar(Integer id) throws DAOException {
         return this.funcionarioDAO.carregar(id);
     }
 
-    public Funcionario buscaPorCodigoFuncionarioNaEmpresa(String codigo) {
+    public Funcionario buscaPorCodigoFuncionarioNaEmpresa(String codigo) throws DAOException {
         return this.funcionarioDAO.buscarPorCodigoFuncionarioNaEmpresa(codigo);
     }
 
-    public Funcionario buscaPorLogin(String login) {
+    public Funcionario buscaPorLogin(String login) throws DAOException {
         return this.funcionarioDAO.buscarPorLogin(login);
     }
 
-    public Funcionario buscaPorEmail(String email) {
+    public Funcionario buscaPorEmail(String email) throws DAOException {
         return this.funcionarioDAO.buscarPorEmail(email);
     }
-    
-    public String getEmailFuncionario(Funcionario funcionario) {
+
+    public String getEmailFuncionario(Funcionario funcionario) throws DAOException {
         return this.funcionarioDAO.carregar(funcionario.getId()).getEmail();
     }
 
-    public void salvar(Funcionario funcionario) throws DAOException{
+    public void salvar(Funcionario funcionario) throws DAOException {
         Integer codigo = funcionario.getId();
         if (codigo == null || codigo == 0) {
             funcionario.setNome(funcionario.getNome().toUpperCase());
@@ -52,15 +52,18 @@ public class FuncionarioRN {
             funcionario.setDataCadastro(new Date(System.currentTimeMillis()));
             this.funcionarioDAO.salvar(funcionario);
         } else {
+            funcionario.setLogin(buscaPorEmail(funcionario.getEmail()).getLogin());
+            funcionario.setCodigoFuncionarioNaEmpresa(buscaPorEmail(funcionario.getEmail()).getCodigoFuncionarioNaEmpresa());
+            funcionario.setDataCadastro(buscaPorEmail(funcionario.getEmail()).getDataCadastro());
             this.funcionarioDAO.atualizar(funcionario);
         }
     }
 
-    public void excluir(Funcionario funcionario) {
+    public void excluir(Funcionario funcionario) throws DAOException {
         this.funcionarioDAO.excluir(funcionario);
     }
 
-    public List<Funcionario> listar() {
+    public List<Funcionario> listar() throws DAOException {
         List<Funcionario> lista = this.funcionarioDAO.listar();
         return lista;
     }

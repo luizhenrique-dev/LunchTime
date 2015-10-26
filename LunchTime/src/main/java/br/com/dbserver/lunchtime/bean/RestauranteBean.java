@@ -10,6 +10,8 @@ import br.com.dbserver.lunchtime.negocio.RestauranteRN;
 import br.com.dbserver.lunchtime.util.DAOException;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
 import javax.faces.bean.ManagedBean;
@@ -60,15 +62,23 @@ public class RestauranteBean {
     }
 
     public void excluir() {
-        RestauranteRN restauranteRN = new RestauranteRN();
-        restauranteRN.excluir(this.restaurante);
-        this.lista = null;
+        try {
+            RestauranteRN restauranteRN = new RestauranteRN();
+            restauranteRN.excluir(this.restaurante);
+            this.lista = null;
+        } catch (DAOException ex) {
+            Logger.getLogger(RestauranteBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public List<Restaurante> getLista() {
         if (this.lista == null) {
-            RestauranteRN restauranteRN = new RestauranteRN();
-            this.lista = restauranteRN.listar();
+            try {
+                RestauranteRN restauranteRN = new RestauranteRN();
+                this.lista = restauranteRN.listar();
+            } catch (DAOException ex) {
+                Logger.getLogger(RestauranteBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return this.lista;
     }

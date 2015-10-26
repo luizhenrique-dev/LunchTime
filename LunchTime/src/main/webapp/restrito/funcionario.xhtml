@@ -12,14 +12,14 @@ and open the template in the editor.
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <ui:composition template="/templates/interna.xhtml">
         <ui:define name="titulo">Atualizar perfil</ui:define>
-        
+
         <ui:define name="corpo">
             <h3>Atualizar perfil</h3>
             <h:form id="cadastro">
                 <p:messages id="messages" autoUpdate="true" closable="true"/>
                 <p:growl id="growl" showDetail="true" sticky="true" />  
                 <h:inputHidden value="#{funcionarioBean.funcionario.id}" />
-                <h:inputHidden value="#{funcionarioBean.funcionario.dataCadastro}" />
+                <h:inputHidden value="#{funcionarioBean.funcionario.email}" />
 
                 <p:panelGrid columns="2" columnClasses="colunaEsquerda,colunaDireita">
                     <p:outputLabel value="Nome:" for="nome" />
@@ -28,19 +28,14 @@ and open the template in the editor.
                     </p:inputText>
 
                     <p:outputLabel value="Código na empresa:" for="codEmpresa" />
-                    <p:inputText id="codEmpresa" label="código na empresa" value="#{funcionarioBean.funcionario.codigoFuncionarioNaEmpresa}" size="15" maxlength="255" required="true" readonly="true" requiredMessage="Informe o seu código na empresa."/>
+                    <p:inputText id="codEmpresa" label="cÃƒÂ³digo na empresa" value="#{funcionarioBean.funcionario.codigoFuncionarioNaEmpresa}" size="15" maxlength="255" required="true" readonly="true" requiredMessage="Informe o seu cÃƒÂ³digo na empresa."/>
 
                     <p:outputLabel value="E-mail:" for="email" />
                     <h:panelGroup>
-                        <p:inputText id="email" label="E-mail" value="#{funcionarioBean.funcionario.email}" size="50" maxlength="50" required="true" validatorMessage="E-mail inválido.">
+                        <p:inputText id="email" label="E-mail" value="#{funcionarioBean.funcionario.email}" size="50" maxlength="50" readonly="true" required="true" validatorMessage="E-mail invÃƒÂ¡lido.">
                             <f:validateRegex pattern="[a-zA-Z0-9\-\_\.]+@[a-zA-Z0-9\-\_\.]+" />
                         </p:inputText>
                     </h:panelGroup>
-                    
-                    <p:outputLabel value="Data de Cadastro:" for="dataCadastro" />
-                    <p:inputText id="dataCadastro" label="Data Cadastro" value="#{funcionarioBean.funcionario.dataCadastro}" size="10" required="true" readonly="true">
-                        <f:convertDateTime pattern="dd/MM/yyyy"  />
-                    </p:inputText>
 
                     <p:outputLabel value="Login:" for="login" />
                     <p:inputText id="login" label="Login" value="#{funcionarioBean.funcionario.login}" size="10" required="true" readonly="true" requiredMessage="Informe o seu login.">
@@ -61,7 +56,7 @@ and open the template in the editor.
             </h:form>
             <h:form>
                 <br />
-                <p:commandButton value="Voltar" action="/publico/principal" icon="ui-icon-arrowreturnthick-1-w" />
+                <p:commandButton value="Voltar" action="/restrito/principal" icon="ui-icon-arrowreturnthick-1-w" />
             </h:form>
         </ui:define>
     </ui:composition>

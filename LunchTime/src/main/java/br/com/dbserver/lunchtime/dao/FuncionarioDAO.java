@@ -6,7 +6,7 @@
 package br.com.dbserver.lunchtime.dao;
 
 import br.com.dbserver.lunchtime.entidade.Funcionario;
-import br.com.dbserver.lunchtime.entidade.Voto;
+import br.com.dbserver.lunchtime.util.DAOException;
 import java.util.List;
 
 /**
@@ -15,19 +15,19 @@ import java.util.List;
  */
 public interface FuncionarioDAO {
 
-    public void salvar(Funcionario funcionario);
+    public void salvar(Funcionario funcionario) throws DAOException;
 
-    public void atualizar(Funcionario funcionario);
+    public void atualizar(Funcionario funcionario)throws DAOException;
 
-    public void excluir(Funcionario funcionario);
+    public void excluir(Funcionario funcionario)throws DAOException;
 
-    public Funcionario carregar(Integer codigo);
+    public Funcionario carregar(Integer codigo) throws DAOException;
 
-    public List<Funcionario> listar();
+    public List<Funcionario> listar() throws DAOException;
 
-    public Funcionario buscarPorCodigoFuncionarioNaEmpresa(String codigoFuncionario);
+    public Funcionario buscarPorCodigoFuncionarioNaEmpresa(String codigoFuncionario) throws DAOException;
 
-    public Funcionario buscarPorEmail(String email);
+    public Funcionario buscarPorEmail(String email)throws DAOException;
     
-    public Funcionario buscarPorLogin(String login);
+    public Funcionario buscarPorLogin(String login)throws DAOException;
 }

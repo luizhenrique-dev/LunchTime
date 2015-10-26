@@ -25,7 +25,7 @@ public class RestauranteRN {
         this.restauranteDAO = DAOFactory.criarRestauranteDAO();
     }
 
-    public Restaurante carregar(Integer id) {
+    public Restaurante carregar(Integer id) throws DAOException {
         return this.restauranteDAO.carregar(id);
     }
 
@@ -41,11 +41,11 @@ public class RestauranteRN {
         }
     }
 
-    public void excluir(Restaurante restaurante) {
+    public void excluir(Restaurante restaurante) throws DAOException {
         this.restauranteDAO.excluir(restaurante);
     }
 
-    public List<Restaurante> listar() {
+    public List<Restaurante> listar() throws DAOException {
         List<Restaurante> lista = this.restauranteDAO.listar();
         return lista;
     }

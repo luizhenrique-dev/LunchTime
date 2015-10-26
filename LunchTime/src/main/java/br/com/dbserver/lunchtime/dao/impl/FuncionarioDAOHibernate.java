@@ -7,6 +7,7 @@ package br.com.dbserver.lunchtime.dao.impl;
 
 import br.com.dbserver.lunchtime.dao.FuncionarioDAO;
 import br.com.dbserver.lunchtime.entidade.Funcionario;
+import br.com.dbserver.lunchtime.util.DAOException;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -27,13 +28,21 @@ public class FuncionarioDAOHibernate implements FuncionarioDAO {
     }
 
     @Override
-    public void salvar(Funcionario funcionario) {
-        this.session.save(funcionario);
+    public void salvar(Funcionario funcionario) throws DAOException {
+        try {
+            this.session.save(funcionario);
+        } catch (Exception e) {
+            throw new DAOException("Não foi possível realizar a operação no banco de dados. " + e.getMessage());
+        }
     }
 
     @Override
-    public void excluir(Funcionario funcionario) {
-        this.session.delete(funcionario);
+    public void excluir(Funcionario funcionario) throws DAOException{
+        try {
+            this.session.delete(funcionario);
+        } catch (Exception e) {
+            throw new DAOException("Não foi possível realizar a operação no banco de dados. " + e.getMessage());
+        }
     }
 
     @Override
@@ -42,13 +51,17 @@ public class FuncionarioDAOHibernate implements FuncionarioDAO {
     }
 
     @Override
-    public void atualizar(Funcionario funcionario) {
-        if (funcionario.getPermissao() == null || funcionario.getPermissao().size() == 0) {
-            Funcionario funcionarioPermissao = this.carregar(funcionario.getId());
-            funcionario.setPermissao(funcionarioPermissao.getPermissao());
-            this.session.evict(funcionarioPermissao);
+    public void atualizar(Funcionario funcionario) throws DAOException {
+        try {
+            if (funcionario.getPermissao() == null || funcionario.getPermissao().size() == 0) {
+                Funcionario funcionarioPermissao = this.carregar(funcionario.getId());
+                funcionario.setPermissao(funcionarioPermissao.getPermissao());
+                this.session.evict(funcionarioPermissao);
+            }
+            this.session.update(funcionario);
+        } catch (Exception e) {
+            throw new DAOException("Não foi possível realizar a operação no banco de dados. " + e.getMessage());
         }
-        this.session.update(funcionario);
     }
 
     @Override

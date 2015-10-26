@@ -7,8 +7,11 @@ package br.com.dbserver.lunchtime.bean;
 
 import br.com.dbserver.lunchtime.entidade.Funcionario;
 import br.com.dbserver.lunchtime.negocio.FuncionarioRN;
+import br.com.dbserver.lunchtime.util.ContextoUtil;
 import br.com.dbserver.lunchtime.util.DAOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
 import javax.faces.bean.ManagedBean;
@@ -37,17 +40,17 @@ public class FuncionarioBean {
     public void salvar() {
         String senha = this.funcionario.getSenha();
         if (senha.equals(this.confirmaSenha)) {
-            this.funcionario.setSenha(criptografaSenha(senha));
-            this.funcionario.setAtivo(true);
+            try {
+                this.funcionario.setSenha(criptografaSenha(senha));
+                this.funcionario.setAtivo(true);
 
-            if (validaNovoFuncionario()) {
-                try {
+                if (validaNovoFuncionario()) {
                     FuncionarioRN funcionarioRN = new FuncionarioRN();
                     funcionarioRN.salvar(this.funcionario);
                     enviaMensagemFaces(FacesMessage.SEVERITY_INFO, "Clique em 'Voltar' e efetue o login.", "Funcionário cadastrado com sucesso!");
-                } catch (DAOException e) {
-                    enviaMensagemFaces(FacesMessage.SEVERITY_ERROR, "Erro: " + e.getMessage(), "Não foi possível cadastrar o funcionário! Se o problema persistir entre em contato com o administrador.");
                 }
+            } catch (DAOException ex) {
+                enviaMensagemFaces(FacesMessage.SEVERITY_ERROR, "Erro: " + ex.getMessage(), "Não foi possível cadastrar o funcionário! Se o problema persistir entre em contato com o administrador.");
             }
         } else {
             enviaMensagemFaces(FacesMessage.SEVERITY_ERROR, "Erro", "As senhas digitadas não conferem!");
@@ -57,17 +60,17 @@ public class FuncionarioBean {
     public void atualizar() {
         String senha = this.funcionario.getSenha();
         if (senha.equals(this.confirmaSenha)) {
-            this.funcionario.setSenha(criptografaSenha(senha));
-            this.funcionario.setAtivo(true);
-            FuncionarioRN funcionarioRN = new FuncionarioRN();
-            
-            if (funcionarioRN.buscaPorEmail(funcionario.getEmail()) == null || funcionarioRN.getEmailFuncionario(funcionario).equals(funcionario.getEmail())) {
-                try {
-                    funcionarioRN.salvar(this.funcionario);
-                    enviaMensagemFaces(FacesMessage.SEVERITY_INFO, "Sucesso.", "Perfil atualizado com sucesso!");
-                } catch (DAOException e) {
-                    enviaMensagemFaces(FacesMessage.SEVERITY_ERROR, "Erro: " + e.getMessage(), "Não foi possível atualizar seu perfil! Se o problema persistir entre em contato com o administrador.");
-                }
+            try {
+                this.funcionario.setSenha(criptografaSenha(senha));
+                this.funcionario.setAtivo(true);
+                FuncionarioRN funcionarioRN = new FuncionarioRN();
+                funcionarioRN.salvar(this.funcionario);
+                ContextoBean contextoBean = ContextoUtil.getContextoBean();
+                contextoBean.setFuncionarioLogado(null);
+                enviaMensagemFaces(FacesMessage.SEVERITY_INFO, "Sucesso.", "Perfil atualizado com sucesso!");
+
+            } catch (DAOException ex) {
+                enviaMensagemFaces(FacesMessage.SEVERITY_ERROR, "Erro: " + ex.getMessage(), "Não foi possível atualizar seu perfil! Se o problema persistir entre em contato com o administrador.");
             }
         } else {
             enviaMensagemFaces(FacesMessage.SEVERITY_ERROR, "Erro", "As senhas digitadas não conferem!");
@@ -80,15 +83,23 @@ public class FuncionarioBean {
     }
 
     public void excluir() {
-        FuncionarioRN funcionarioRN = new FuncionarioRN();
-        funcionarioRN.excluir(this.funcionario);
-        this.lista = null;
+        try {
+            FuncionarioRN funcionarioRN = new FuncionarioRN();
+            funcionarioRN.excluir(this.funcionario);
+            this.lista = null;
+        } catch (DAOException ex) {
+            Logger.getLogger(FuncionarioBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public List<Funcionario> getLista() {
         if (this.lista == null) {
-            FuncionarioRN funcionarioRN = new FuncionarioRN();
-            this.lista = funcionarioRN.listar();
+            try {
+                FuncionarioRN funcionarioRN = new FuncionarioRN();
+                this.lista = funcionarioRN.listar();
+            } catch (DAOException ex) {
+                Logger.getLogger(FuncionarioBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return this.lista;
     }
@@ -126,31 +137,22 @@ public class FuncionarioBean {
         }
     }
 
-    private boolean verificaFuncionarioExistenteEmail(String email) {
+    private boolean verificaFuncionarioExistenteEmail(String email) throws DAOException {
         FuncionarioRN funcionarioRN = new FuncionarioRN();
-        if (funcionarioRN.buscaPorEmail(email) != null) {
-            return true;
-        }
-        return false;
+        return funcionarioRN.buscaPorEmail(email) != null;
     }
 
-    private boolean verificaFuncionarioExistenteCodigo(String codigo) {
+    private boolean verificaFuncionarioExistenteCodigo(String codigo) throws DAOException {
         FuncionarioRN funcionarioRN = new FuncionarioRN();
-        if (funcionarioRN.buscaPorCodigoFuncionarioNaEmpresa(codigo) != null) {
-            return true;
-        }
-        return false;
+        return funcionarioRN.buscaPorCodigoFuncionarioNaEmpresa(codigo) != null;
     }
 
-    private boolean verificaFuncionarioExistenteLogin(String login) {
+    private boolean verificaFuncionarioExistenteLogin(String login) throws DAOException {
         FuncionarioRN funcionarioRN = new FuncionarioRN();
-        if (funcionarioRN.buscaPorLogin(login) != null) {
-            return true;
-        }
-        return false;
+        return funcionarioRN.buscaPorLogin(login) != null;
     }
 
-    private boolean validaNovoFuncionario() {
+    private boolean validaNovoFuncionario() throws DAOException {
         if (!verificaFuncionarioExistenteEmail(funcionario.getEmail())) {
             if (!verificaFuncionarioExistenteCodigo(funcionario.getCodigoFuncionarioNaEmpresa())) {
                 if (!verificaFuncionarioExistenteLogin(funcionario.getLogin())) {
