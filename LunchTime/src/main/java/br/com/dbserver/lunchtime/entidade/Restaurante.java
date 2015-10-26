@@ -32,10 +32,15 @@ public class Restaurante implements Serializable {
     private String nome;
     private float preco;
     private String endereco;
+    @Column(name = "tipo_comida")
     private String tipoComida;
+    @Column(name = "tipo_almoco")
     private String tipoAlmoco;
+    @Column(name = "distancia")
     private float distanciaAPartirDoLocalDeTrabalho;
+    @Column(name = "formas_pagamento")
     private String formasDePagamento;
+    @Column(name = "possui_estacionamento")
     private boolean possuiEstacionamentoParticular;
     @Transient
     private int quantidadeVotosDia;
@@ -198,7 +203,7 @@ public class Restaurante implements Serializable {
         }
         return true;
     }
-    
+
     private static final long serialVersionUID = 4732855178243882785L;
 
 }
