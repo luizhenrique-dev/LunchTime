@@ -30,7 +30,7 @@ and open the template in the editor.
 
                     <p:outputLabel value="Tipo do almoço:" for="tipoAlmoco" />
                     <p:inputText id="tipoAlmoco" label="Tipo do almoço" value="#{restauranteBean.restaurante.tipoAlmoco}" size="20" maxlength="255" required="true" requiredMessage="Informe o tipo do almoço."/>
-                    <p:outputLabel value="Exemplo: Por kilo, por pessoa, rodízio." />
+                    <p:outputLabel value="Exemplo: Por kilo, por pessoa, rodízio, fast food" />
 
                     <p:outputLabel value="Preço (R$):" for="preco" />
                     <p:inputText id="preco" label="Preço" value="#{restauranteBean.restaurante.preco}" size="5" maxlength="35" required="true" requiredMessage="Informe o valor.">
@@ -76,7 +76,7 @@ and open the template in the editor.
 
                 <p:outputLabel value="Os campos com * são obrigatórios" /> <br />
 
-                <p:commandButton value="Cadastrar" action="#{restauranteBean.salvar}" update="growl" icon="fa fa-save" />
+                <p:commandButton value="Cadastrar" action="#{restauranteBean.salvar}" update="growl, messages" icon="fa fa-save" />
             </h:form>
             <h:form>
                 <br />

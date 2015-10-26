@@ -9,6 +9,8 @@ import br.com.dbserver.lunchtime.dao.VotoDAO;
 import br.com.dbserver.lunchtime.entidade.Funcionario;
 import br.com.dbserver.lunchtime.entidade.Restaurante;
 import br.com.dbserver.lunchtime.entidade.Voto;
+import br.com.dbserver.lunchtime.util.DAOException;
+import java.util.Date;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -26,8 +28,12 @@ public class VotoDAOHibernate implements VotoDAO {
         this.session = session;
     }
 
-    public void salvar(Voto voto) {
-        this.session.save(voto);
+    public void salvar(Voto voto) throws DAOException {
+        try {
+            this.session.save(voto);
+        } catch (Exception e) {
+            throw new DAOException("Não foi possível realizar a operação no banco de dados. " + e.getMessage());
+        }
     }
 
     public void atualizar(Voto voto) {
@@ -60,5 +66,23 @@ public class VotoDAOHibernate implements VotoDAO {
         return consulta.list();
 
     }
+
+    public Voto buscarVoto(Funcionario funcionario, Date diaEscolhido) throws DAOException {
+        String hql = "from Voto voto where voto.funcionario = :funcionario and voto.dataVoto = :diaEscolhido";
+        Query consulta = this.session.createQuery(hql);
+        consulta.setParameter("funcionario", funcionario);
+        consulta.setParameter("diaEscolhido", diaEscolhido);
+        return (Voto) consulta.uniqueResult();
+    }
+
+    public List<Voto> listarVotosDoDia(Restaurante restaurante, Date diaEscolhido) throws DAOException {
+        String hql = "from Voto voto where voto.restaurante = :restaurante and voto.dataVoto = :diaEscolhido";
+        Query consulta = this.session.createQuery(hql);
+        consulta.setParameter("restaurante", restaurante);
+        consulta.setParameter("diaEscolhido", diaEscolhido);
+        return consulta.list();
+    }
+    
+    
 
 }

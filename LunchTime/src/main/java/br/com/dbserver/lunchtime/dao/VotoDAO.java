@@ -8,6 +8,8 @@ package br.com.dbserver.lunchtime.dao;
 import br.com.dbserver.lunchtime.entidade.Funcionario;
 import br.com.dbserver.lunchtime.entidade.Restaurante;
 import br.com.dbserver.lunchtime.entidade.Voto;
+import br.com.dbserver.lunchtime.util.DAOException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,17 +18,21 @@ import java.util.List;
  */
 public interface VotoDAO {
 
-    public void salvar(Voto voto);
+    public void salvar(Voto voto) throws DAOException;
 
-    public void atualizar(Voto voto);
+    public void atualizar(Voto voto) throws DAOException;
 
-    public void excluir(Voto voto);
+    public void excluir(Voto voto) throws DAOException;
 
-    public Voto carregar(Integer codigo);
+    public Voto carregar(Integer codigo) throws DAOException;
 
-    public List<Voto> listar();
+    public List<Voto> listar() throws DAOException;
     
-    public List<Voto> listar(Funcionario funcionario);
+    public List<Voto> listar(Funcionario funcionario) throws DAOException;
     
-    public List<Voto> listar(Restaurante restaurante);
+    public List<Voto> listar(Restaurante restaurante) throws DAOException;
+    
+     public List<Voto> listarVotosDoDia(Restaurante restaurante, Date diaEscolhido) throws DAOException;
+    
+    public Voto buscarVoto(Funcionario funcionario, Date diaEscolhido) throws DAOException;
 }

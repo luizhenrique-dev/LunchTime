@@ -127,7 +127,7 @@ public class Funcionario implements Serializable {
 
     public void setVotosFuncionario(List<Voto> votosFuncionario) {
         this.votosFuncionario = votosFuncionario;
-    } 
+    }
 
     public String getCodigoFuncionarioNaEmpresa() {
         return codigoFuncionarioNaEmpresa;
@@ -144,7 +144,7 @@ public class Funcionario implements Serializable {
     public void setLogin(String login) {
         this.login = login;
     }
-    
+
     private static final long serialVersionUID = -4009532420773848278L;
 
     @Override

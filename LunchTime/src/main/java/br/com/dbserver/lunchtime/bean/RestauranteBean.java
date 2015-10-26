@@ -56,8 +56,8 @@ public class RestauranteBean {
         return "/restrito/restaurante";
 
     }
-    
-    public String listarRestaurantes(){
+
+    public String listarRestaurantes() {
         return "/restrito/restaurantes";
     }
 

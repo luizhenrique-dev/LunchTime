@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:composition template="/templates/interna.xhtml">
+        <ui:define name="titulo">Escolher Restaurante</ui:define>
+        <ui:define name="corpo">
+            <h:form id="novaVoto">
+                <h3>Atenção! Você só pode votar uma vez por dia.</h3>
+                <p:growl id="growl" sticky="true" showDetail="true" life="20"/>
+                <p:messages id="messages" autoUpdate="true" showDetail="true" closable="true"/>
+                <p:commandButton id="movieBtn" value="Escolher Restaurante" type="button" styleClass="botaoEsquerda" onclick="PF('dlg1').show();"/>
+                <br /><br />
+                <p:panelGrid columns="2" columnClasses="colunaEsquerda,colunaDireita">
+                    <p:outputLabel id="labelRestaurante" value="Restaurante: " for="campoRestaurante" style="font-weight: bold;"/>
+                    <p:inputText id="campoRestaurante" value="#{votoBean.restauranteSelecionado.nome}" required="true" requiredMessage="Escolha o restaurante em que você vai votar!" readonly="true" size="50"/>
+
+                    <p:outputLabel value="Dia do Voto:" for="datavoto" style="font-weight: bold;"/>
+                    <p:calendar id="datavoto" value="#{votoBean.voto.dataVoto}" required="true" effect="fold" mindate="#{votoBean.voto.dataVoto}" pattern="dd/MM/yyyy" requiredMessage="Informe a data do voto."/>
+                </p:panelGrid>
+                <br /><br />
+
+                <p:dialog id="moviePanel" widgetVar="dlg1" dynamic="true" width="700" hideEffect="explode" showEffect="explode">
+                    <h4>Escolha o Restaurante</h4>
+                    <p:dataTable id="tabelaRestaurantes" var="restaurante" value="#{restauranteBean.lista}" rowKey="#{restaurante.id}" rows="8" selectionMode="single"
+                                 emptyMessage="Nenhum restaurante encontrado." paginator="true">
+                        <p:ajax event="rowSelect" listener="#{votoBean.onRowSelectRestaurante}" update="@form:growl,@form:campoRestaurante, @form:realizaVoto" />
+                        <p:column filterBy="#{restaurante.nome}">
+                            <f:facet name="header">Nome</f:facet>
+                            <h:outputText value="#{restaurante.nome}" />
+                        </p:column>
+                        <p:column width="130" headerText="Tipo Almoço">
+                            <h:outputText value="#{restaurante.tipoAlmoco}" />
+                        </p:column>
+                        <p:column width="60" headerText="Preço (R$)">
+                            <h:outputText value="#{restaurante.preco}">
+                                <f:convertNumber minFractionDigits="2" maxFractionDigits="2" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column width="130" filterBy="#{restaurante.tipoComida}" headerText="Tipo Comida">
+                            <h:outputText value="#{restaurante.tipoComida}" />
+                        </p:column>
+                        <p:column width="70" headerText="Distância (Km)">
+                            <h:outputText value="#{restaurante.distanciaAPartirDoLocalDeTrabalho}" />
+                        </p:column>
+                    </p:dataTable>
+                    <br />
+                    <p:commandButton value="Fechar" type="button" onclick="PF('dlg1').hide();"/>
+                </p:dialog>
+
+                <p:commandButton id="realizaVoto" value="Realizar Voto" actionListener="#{votoBean.salvar}" onclick="if (!confirm('Atenção! Essa operação não poderá ser desfeita confirme todos os dados antes de prosseguir. Você confirma o seu voto no restaurante: #{votoBean.voto.restaurante.nome}?'))
+                            return false;" icon="ui-icon-disk" update="@form:growl"/>
+            </h:form>
+
+            <br />
+            <br />
+            <h:form>
+                <p:commandButton value="Voltar" action="/restrito/principal" icon="ui-icon-arrowreturnthick-1-w" />
+            </h:form>
+
+        </ui:define>
+    </ui:composition>
+</html>
