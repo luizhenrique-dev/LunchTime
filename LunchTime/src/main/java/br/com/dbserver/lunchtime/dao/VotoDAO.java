@@ -27,12 +27,12 @@ public interface VotoDAO {
     public Voto carregar(Integer codigo) throws DAOException;
 
     public List<Voto> listar() throws DAOException;
-    
+
     public List<Voto> listar(Funcionario funcionario) throws DAOException;
-    
+
     public List<Voto> listar(Restaurante restaurante) throws DAOException;
-    
-     public List<Voto> listarVotosDoDia(Restaurante restaurante, Date diaEscolhido) throws DAOException;
-    
+
+    public List<Voto> listarVotosDoDia(Restaurante restaurante, Date diaEscolhido) throws DAOException;
+
     public Voto buscarVoto(Funcionario funcionario, Date diaEscolhido) throws DAOException;
 }

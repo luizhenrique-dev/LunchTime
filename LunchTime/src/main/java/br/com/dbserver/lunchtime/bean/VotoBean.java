@@ -34,6 +34,7 @@ public class VotoBean {
     private Voto voto = new Voto();
     private List<Voto> lista;
     private List<Voto> listaVotosRestaurante;
+    private List<Voto> listaVotosRestauranteDia;
     private List<Voto> listaVotosFuncionario;
     private Restaurante restauranteSelecionado;
 
@@ -92,6 +93,21 @@ public class VotoBean {
             }
         }
         return this.lista;
+    }
+
+    public List<Voto> getListaVotosRestauranteDia() {
+        try {
+            VotoRN votoRN = new VotoRN();
+            this.listaVotosRestauranteDia = votoRN.listarVotosDoDia(restauranteSelecionado, new Date(System.currentTimeMillis()));
+            return listaVotosRestauranteDia;
+        } catch (DAOException ex) {
+            enviaMensagemFaces(FacesMessage.SEVERITY_ERROR, "Erro: " + ex.getMessage(), "Não foi possível obter os votos! Se o problema persistir entre em contato com o administrador.");
+            return null;
+        }
+    }
+
+    public void setListaVotosRestauranteDia(List<Voto> listaVotosRestauranteDia) {
+        this.listaVotosRestauranteDia = listaVotosRestauranteDia;
     }
 
     public Voto getVoto() {

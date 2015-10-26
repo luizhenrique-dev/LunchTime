@@ -34,12 +34,10 @@ and open the template in the editor.
 
                     <sec:authorize ifAnyGranted="ROLE_ADMINISTRADOR">
                         <p:submenu label="Administração" icon="fa fa-key">
-                            <p:menuitem value="Funcionários" url="/admin/funcionarios.jsf" icon="fa fa-users" />
                             <p:submenu label="Restaurantes" icon="fa fa-list-ul">
                                 <p:menuitem value="Novo" url="/admin/cadastrarRestaurante.jsf" />
                                 <p:menuitem value="Mostrar todos" url="/admin/restaurantes.jsf" />
-                            </p:submenu>  
-                            <p:menuitem value="Votações" url="/admin/votacoes.jsf" icon="fa fa-list-alt" />       
+                            </p:submenu>     
                         </p:submenu>
                     </sec:authorize>
 

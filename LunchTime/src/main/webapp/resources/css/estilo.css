@@ -28,6 +28,11 @@
     color: #646264;
 }
 
+.negrito {
+    font-weight: bold;
+    font-size: medium;
+}
+
 .ui-top, .ui-top .ui-layout, .ui-top .ui-layout-bd, .ui-top .ui-layout-unit {
     background-color: #FFD8AA;
 }

@@ -55,6 +55,10 @@ public class VotoRN {
         return this.votoDAO.listar();
     }
     
+    public List<Voto> listarVotosDoDia(Restaurante restaurante, Date diaEscolhido) throws DAOException {
+        return this.votoDAO.listarVotosDoDia(restaurante, diaEscolhido);
+    }
+    
     public boolean buscaVoto(Funcionario funcionario, Date dataEscolhida) throws DAOException {
         if (this.votoDAO.buscarVoto(funcionario, dataEscolhida) == null){
             return false;

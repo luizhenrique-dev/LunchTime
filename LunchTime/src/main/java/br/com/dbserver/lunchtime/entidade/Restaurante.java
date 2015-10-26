@@ -16,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
@@ -36,6 +37,8 @@ public class Restaurante implements Serializable {
     private float distanciaAPartirDoLocalDeTrabalho;
     private String formasDePagamento;
     private boolean possuiEstacionamentoParticular;
+    @Transient
+    private int quantidadeVotosDia;
 
     @Column(name = "hora_abertura")
     private Time horaAbertura;
@@ -154,6 +157,14 @@ public class Restaurante implements Serializable {
 
     public void setTipoAlmoco(String tipoAlmoco) {
         this.tipoAlmoco = tipoAlmoco;
+    }
+
+    public int getQuantidadeVotosDia() {
+        return quantidadeVotosDia;
+    }
+
+    public void setQuantidadeVotosDia(int quantidadeVotosDia) {
+        this.quantidadeVotosDia = quantidadeVotosDia;
     }
 
     @Override
