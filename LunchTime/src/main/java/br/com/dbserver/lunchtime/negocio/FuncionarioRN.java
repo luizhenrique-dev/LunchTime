@@ -8,7 +8,7 @@ package br.com.dbserver.lunchtime.negocio;
 import br.com.dbserver.lunchtime.dao.FuncionarioDAO;
 import br.com.dbserver.lunchtime.entidade.Funcionario;
 import br.com.dbserver.lunchtime.util.DAOFactory;
-import br.com.dbserver.lunchtime.util.DAOException;
+import br.com.dbserver.lunchtime.util.RNException;
 import java.util.Date;
 import java.util.List;
 
@@ -24,29 +24,29 @@ public class FuncionarioRN {
         this.funcionarioDAO = DAOFactory.criarFuncionarioDAO();
     }
 
-    public Funcionario carregar(Integer id) throws DAOException {
+    public Funcionario carregar(Integer id) {
         return this.funcionarioDAO.carregar(id);
     }
 
-    public Funcionario buscaPorCodigoFuncionarioNaEmpresa(String codigo) throws DAOException {
+    public Funcionario buscaPorCodigoFuncionarioNaEmpresa(String codigo) {
         return this.funcionarioDAO.buscarPorCodigoFuncionarioNaEmpresa(codigo);
     }
 
-    public Funcionario buscaPorLogin(String login) throws DAOException {
+    public Funcionario buscaPorLogin(String login) {
         return this.funcionarioDAO.buscarPorLogin(login);
     }
 
-    public Funcionario buscaPorEmail(String email) throws DAOException {
+    public Funcionario buscaPorEmail(String email) {
         return this.funcionarioDAO.buscarPorEmail(email);
     }
 
-    public String getEmailFuncionario(Funcionario funcionario) throws DAOException {
+    public String getEmailFuncionario(Funcionario funcionario) {
         return this.funcionarioDAO.carregar(funcionario.getId()).getEmail();
     }
 
-    public void salvar(Funcionario funcionario) throws DAOException {
+    public void salvar(Funcionario funcionario) throws RNException {
         Integer codigo = funcionario.getId();
-        if (codigo == null || codigo == 0) {
+        if ((codigo == null || codigo == 0) && validaNovoFuncionario(funcionario)) {
             funcionario.setNome(funcionario.getNome().toUpperCase());
             funcionario.getPermissao().add("ROLE_USUARIO");
             funcionario.setDataCadastro(new Date(System.currentTimeMillis()));
@@ -59,12 +59,23 @@ public class FuncionarioRN {
         }
     }
 
-    public void excluir(Funcionario funcionario) throws DAOException {
+    public void excluir(Funcionario funcionario) {
         this.funcionarioDAO.excluir(funcionario);
     }
 
-    public List<Funcionario> listar() throws DAOException {
+    public List<Funcionario> listar() {
         List<Funcionario> lista = this.funcionarioDAO.listar();
         return lista;
+    }
+
+    private boolean validaNovoFuncionario(Funcionario funcionario) throws RNException {
+        if (buscaPorEmail(funcionario.getEmail()) != null) {
+            throw new RNException("Já existe um funcionário cadastrado com este e-mail!");
+        } else if (buscaPorCodigoFuncionarioNaEmpresa(funcionario.getCodigoFuncionarioNaEmpresa()) != null) {
+            throw new RNException("Já existe um funcionário com este código na empresa!");
+        } else if (buscaPorLogin(funcionario.getLogin()) != null) {
+            throw new RNException("Esse login não está disponível para cadastro!");
+        }
+        return true;
     }
 }

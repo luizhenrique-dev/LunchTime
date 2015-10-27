@@ -9,7 +9,6 @@ import br.com.dbserver.lunchtime.dao.VotoDAO;
 import br.com.dbserver.lunchtime.entidade.Funcionario;
 import br.com.dbserver.lunchtime.entidade.Restaurante;
 import br.com.dbserver.lunchtime.entidade.Voto;
-import br.com.dbserver.lunchtime.util.DAOException;
 import br.com.dbserver.lunchtime.util.DAOFactory;
 import java.util.Date;
 import java.util.List;
@@ -26,7 +25,7 @@ public class VotoRN {
         this.votoDAO = DAOFactory.criarVotoDAO();
     }
 
-    public void salvar(Voto voto) throws DAOException {
+    public void salvar(Voto voto) {
         Integer codigo = voto.getId();
         if (codigo == null || codigo == 0) {
             this.votoDAO.salvar(voto);
@@ -35,32 +34,32 @@ public class VotoRN {
         }
     }
 
-    public void excluir(Voto voto) throws DAOException {
+    public void excluir(Voto voto) {
         this.votoDAO.excluir(voto);
     }
 
-    public Voto carregar(Integer id) throws DAOException {
+    public Voto carregar(Integer id) {
         return this.votoDAO.carregar(id);
     }
 
-    public List<Voto> listarVotosRestaurante(Restaurante restaurante) throws DAOException {
+    public List<Voto> listarVotosRestaurante(Restaurante restaurante) {
         return this.votoDAO.listar(restaurante);
     }
 
-    public List<Voto> listarVotosFuncionario(Funcionario funcionario) throws DAOException {
+    public List<Voto> listarVotosFuncionario(Funcionario funcionario) {
         return this.votoDAO.listar(funcionario);
     }
 
-    public List<Voto> listar() throws DAOException {
+    public List<Voto> listar() {
         return this.votoDAO.listar();
     }
-    
-    public List<Voto> listarVotosDoDia(Restaurante restaurante, Date diaEscolhido) throws DAOException {
+
+    public List<Voto> listarVotosDoDia(Restaurante restaurante, Date diaEscolhido) {
         return this.votoDAO.listarVotosDoDia(restaurante, diaEscolhido);
     }
-    
-    public boolean buscaVoto(Funcionario funcionario, Date dataEscolhida) throws DAOException {
-        if (this.votoDAO.buscarVoto(funcionario, dataEscolhida) == null){
+
+    public boolean buscaVoto(Funcionario funcionario, Date dataEscolhida) {
+        if (this.votoDAO.buscarVoto(funcionario, dataEscolhida) == null) {
             return false;
         }
         return true;

@@ -9,7 +9,6 @@ import br.com.dbserver.lunchtime.dao.RestauranteDAO;
 import br.com.dbserver.lunchtime.dao.VotoDAO;
 import br.com.dbserver.lunchtime.entidade.Restaurante;
 import br.com.dbserver.lunchtime.entidade.Voto;
-import br.com.dbserver.lunchtime.util.DAOException;
 import br.com.dbserver.lunchtime.util.DAOFactory;
 import java.sql.Time;
 import java.util.Date;
@@ -27,11 +26,11 @@ public class RestauranteRN {
         this.restauranteDAO = DAOFactory.criarRestauranteDAO();
     }
 
-    public Restaurante carregar(Integer id) throws DAOException {
+    public Restaurante carregar(Integer id) {
         return this.restauranteDAO.carregar(id);
     }
 
-    public void salvar(Restaurante restaurante, Date horaAbertura, Date horaEncerramento, Date horarioDePico) throws DAOException {
+    public void salvar(Restaurante restaurante, Date horaAbertura, Date horaEncerramento, Date horarioDePico) {
         Integer codigo = restaurante.getId();
         if (codigo == null || codigo == 0) {
             preencheHorarios(restaurante, horaAbertura, horaEncerramento, horarioDePico);
@@ -42,17 +41,17 @@ public class RestauranteRN {
         }
     }
 
-    public void excluir(Restaurante restaurante) throws DAOException {
+    public void excluir(Restaurante restaurante) {
         this.restauranteDAO.excluir(restaurante);
     }
 
-    public List<Restaurante> listar(Date diaEscolhido) throws DAOException {
+    public List<Restaurante> listar(Date diaEscolhido) {
         List<Restaurante> lista = this.restauranteDAO.listar();
         preencheVotosDoDiaRestaurante(lista, diaEscolhido);
         return lista;
     }
 
-    private void preencheVotosDoDiaRestaurante(List<Restaurante> lista, Date diaEscolhido) throws DAOException {
+    private void preencheVotosDoDiaRestaurante(List<Restaurante> lista, Date diaEscolhido) {
         VotoDAO votoDAO = DAOFactory.criarVotoDAO();
         for (Restaurante restaurante : lista) {
             List<Voto> listaVotosRestauranteHoje = votoDAO.listarVotosDoDia(restaurante, diaEscolhido);

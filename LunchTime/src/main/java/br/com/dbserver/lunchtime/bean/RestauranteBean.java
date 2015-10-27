@@ -7,11 +7,8 @@ package br.com.dbserver.lunchtime.bean;
 
 import br.com.dbserver.lunchtime.entidade.Restaurante;
 import br.com.dbserver.lunchtime.negocio.RestauranteRN;
-import br.com.dbserver.lunchtime.util.DAOException;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
 import javax.faces.bean.ManagedBean;
@@ -36,15 +33,10 @@ public class RestauranteBean {
     }
 
     public String salvar() {
-        try {
-            RestauranteRN restauranteRN = new RestauranteRN();
-            restauranteRN.salvar(this.restaurante, horaAbertura, horaEncerramento, horarioDePico);
-            enviaMensagemFaces(FacesMessage.SEVERITY_INFO, "Sucesso", "Restaurante cadastrado com sucesso!");
-            return "restaurantes";
-        } catch (DAOException e) {
-            enviaMensagemFaces(FacesMessage.SEVERITY_ERROR, "Erro: " + e.getMessage(), "Não foi possível cadastrar o restaurante! Se o problema persistir entre em contato com o administrador.");
-            return null;
-        }
+        RestauranteRN restauranteRN = new RestauranteRN();
+        restauranteRN.salvar(this.restaurante, horaAbertura, horaEncerramento, horarioDePico);
+        enviaMensagemFaces(FacesMessage.SEVERITY_INFO, "Sucesso", "Restaurante cadastrado com sucesso!");
+        return "restaurantes";
     }
 
     public String editar() {
@@ -62,23 +54,18 @@ public class RestauranteBean {
     }
 
     public void excluir() {
-        try {
-            RestauranteRN restauranteRN = new RestauranteRN();
-            restauranteRN.excluir(this.restaurante);
-            this.lista = null;
-        } catch (DAOException ex) {
-            Logger.getLogger(RestauranteBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        RestauranteRN restauranteRN = new RestauranteRN();
+        restauranteRN.excluir(this.restaurante);
+        this.lista = null;
+
     }
 
     public List<Restaurante> getLista() {
         if (this.lista == null) {
-            try {
-                RestauranteRN restauranteRN = new RestauranteRN();
-                this.lista = restauranteRN.listar(dataFiltroVotos);
-            } catch (DAOException ex) {
-                Logger.getLogger(RestauranteBean.class.getName()).log(Level.SEVERE, null, ex);
-            }
+
+            RestauranteRN restauranteRN = new RestauranteRN();
+            this.lista = restauranteRN.listar(dataFiltroVotos);
+
         }
         return this.lista;
     }

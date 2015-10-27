@@ -10,11 +10,8 @@ import br.com.dbserver.lunchtime.entidade.Restaurante;
 import br.com.dbserver.lunchtime.entidade.Voto;
 import br.com.dbserver.lunchtime.negocio.VotoRN;
 import br.com.dbserver.lunchtime.util.ContextoUtil;
-import br.com.dbserver.lunchtime.util.DAOException;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
 import javax.faces.bean.ManagedBean;
@@ -43,27 +40,22 @@ public class VotoBean {
     }
 
     public String salvar() {
-        try {
-            VotoRN votoRN = new VotoRN();
-            ContextoBean contextoBean = ContextoUtil.getContextoBean();
-            Funcionario funcionario = contextoBean.getFuncionarioLogado();
-            if (restauranteSelecionado != null) {
-                if (!votoRN.buscaVoto(funcionario, voto.getDataVoto())) {
-                    voto.setFuncionario(funcionario);
-                    votoRN.salvar(this.voto);
-                    enviaMensagemFaces(FacesMessage.SEVERITY_INFO, "Clique em 'Acompanhar Votação' no menu 'Eleições' para mais informações.", "Voto realizado com sucesso!");
-                    novo();
-                    return "votos";
-                } else {
-                    enviaMensagemFaces(FacesMessage.SEVERITY_ERROR, "Você já votou neste dia!", "Erro:");
-                    return null;
-                }
+        VotoRN votoRN = new VotoRN();
+        ContextoBean contextoBean = ContextoUtil.getContextoBean();
+        Funcionario funcionario = contextoBean.getFuncionarioLogado();
+        if (restauranteSelecionado != null) {
+            if (!votoRN.buscaVoto(funcionario, voto.getDataVoto())) {
+                voto.setFuncionario(funcionario);
+                votoRN.salvar(this.voto);
+                enviaMensagemFaces(FacesMessage.SEVERITY_INFO, "Clique em 'Acompanhar Votação' no menu 'Eleições' para mais informações.", "Voto realizado com sucesso!");
+                novo();
+                return "votos";
             } else {
-                enviaMensagemFaces(FacesMessage.SEVERITY_WARN, "Erro de validação", "Escolha o restaurante em que você vai votar!");
+                enviaMensagemFaces(FacesMessage.SEVERITY_ERROR, "Você já votou neste dia!", "Erro:");
                 return null;
             }
-        } catch (DAOException e) {
-            enviaMensagemFaces(FacesMessage.SEVERITY_ERROR, "Erro: " + e.getMessage(), "Não foi possível realizar seu voto! Se o problema persistir entre em contato com o administrador.");
+        } else {
+            enviaMensagemFaces(FacesMessage.SEVERITY_WARN, "Erro de validação", "Escolha o restaurante em que você vai votar!");
             return null;
         }
     }
@@ -73,36 +65,23 @@ public class VotoBean {
     }
 
     public void excluir() {
-        try {
-            VotoRN votoRN = new VotoRN();
-            votoRN.excluir(this.voto);
-            this.lista = null;
-        } catch (DAOException ex) {
-            Logger.getLogger(VotoBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        VotoRN votoRN = new VotoRN();
+        votoRN.excluir(this.voto);
+        this.lista = null;
     }
 
     public List<Voto> getLista() {
         if (this.lista == null) {
-            try {
-                VotoRN votoRN = new VotoRN();
-                this.lista = votoRN.listar();
-            } catch (DAOException ex) {
-                Logger.getLogger(VotoBean.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            VotoRN votoRN = new VotoRN();
+            this.lista = votoRN.listar();
         }
         return this.lista;
     }
 
     public List<Voto> getListaVotosRestauranteDia() {
-        try {
-            VotoRN votoRN = new VotoRN();
-            this.listaVotosRestauranteDia = votoRN.listarVotosDoDia(restauranteSelecionado, new Date(System.currentTimeMillis()));
-            return listaVotosRestauranteDia;
-        } catch (DAOException ex) {
-            enviaMensagemFaces(FacesMessage.SEVERITY_ERROR, "Erro: " + ex.getMessage(), "Não foi possível obter os votos! Se o problema persistir entre em contato com o administrador.");
-            return null;
-        }
+        VotoRN votoRN = new VotoRN();
+        this.listaVotosRestauranteDia = votoRN.listarVotosDoDia(restauranteSelecionado, new Date(System.currentTimeMillis()));
+        return listaVotosRestauranteDia;
     }
 
     public void setListaVotosRestauranteDia(List<Voto> listaVotosRestauranteDia) {
@@ -118,14 +97,9 @@ public class VotoBean {
     }
 
     public List<Voto> getListaVotosRestaurante() {
-        try {
-            VotoRN votoRN = new VotoRN();
-            this.listaVotosRestaurante = votoRN.listarVotosRestaurante(restauranteSelecionado);
-            return listaVotosRestaurante;
-        } catch (DAOException ex) {
-            enviaMensagemFaces(FacesMessage.SEVERITY_ERROR, "Erro: " + ex.getMessage(), "Não foi possível obter os votos! Se o problema persistir entre em contato com o administrador.");
-            return null;
-        }
+        VotoRN votoRN = new VotoRN();
+        this.listaVotosRestaurante = votoRN.listarVotosRestaurante(restauranteSelecionado);
+        return listaVotosRestaurante;
     }
 
     public void setListaVotosRestaurante(List<Voto> listaVotosRestaurante) {
@@ -133,15 +107,10 @@ public class VotoBean {
     }
 
     public List<Voto> getListaVotosFuncionario() {
-        try {
-            VotoRN votoRN = new VotoRN();
-            ContextoBean contextoBean = ContextoUtil.getContextoBean();
-            this.listaVotosFuncionario = votoRN.listarVotosFuncionario(contextoBean.getFuncionarioLogado());
-            return listaVotosFuncionario;
-        } catch (DAOException ex) {
-            enviaMensagemFaces(FacesMessage.SEVERITY_ERROR, "Erro: " + ex.getMessage(), "Não foi possível obter os votos! Se o problema persistir entre em contato com o administrador.");
-            return null;
-        }
+        VotoRN votoRN = new VotoRN();
+        ContextoBean contextoBean = ContextoUtil.getContextoBean();
+        this.listaVotosFuncionario = votoRN.listarVotosFuncionario(contextoBean.getFuncionarioLogado());
+        return listaVotosFuncionario;
     }
 
     public void setListaVotosFuncionario(List<Voto> listaVotosFuncionario) {

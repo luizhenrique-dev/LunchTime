@@ -6,7 +6,6 @@
 package br.com.dbserver.lunchtime.dao;
 
 import br.com.dbserver.lunchtime.entidade.Restaurante;
-import br.com.dbserver.lunchtime.util.DAOException;
 import java.util.List;
 
 /**
@@ -15,13 +14,13 @@ import java.util.List;
  */
 public interface RestauranteDAO {
 
-    public void salvar(Restaurante restaurante) throws DAOException;
+    public void salvar(Restaurante restaurante);
 
-    public void atualizar(Restaurante restaurante) throws DAOException;
+    public void atualizar(Restaurante restaurante);
 
-    public void excluir(Restaurante restaurante) throws DAOException;
+    public void excluir(Restaurante restaurante);
 
-    public Restaurante carregar(Integer codigo) throws DAOException;
+    public Restaurante carregar(Integer codigo);
 
-    public List<Restaurante> listar() throws DAOException;
+    public List<Restaurante> listar();
 }
