@@ -19,6 +19,7 @@ import javax.persistence.Temporal;
 /**
  *
  * @author Luiz Henrique
+ * Representa um Voto que no contexto de eleição é o método de escolha do local para almoçar. 
  */
 @Entity
 @Table(name = "voto")
@@ -26,18 +27,30 @@ public class Voto implements Serializable{
 
     @Id
     @GeneratedValue
+    /** 
+     * Identificador único do voto.
+     */
     private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "id_funcionario", referencedColumnName = "id")
+    /**
+     * O funcionário é aquele que realiza o voto.
+     */
     private Funcionario funcionario;
     
     @ManyToOne
     @JoinColumn(name = "id_restaurante", referencedColumnName = "id")
+    /**
+     * Restaurante é o local votado pelo funcionário para almoçar.
+     */
     private Restaurante restaurante;
 
     @Column(name = "data_voto", nullable = false)
     @Temporal(javax.persistence.TemporalType.DATE)
+    /**
+     * É o dia em que o voto foi feito.
+     */
     private Date dataVoto;
 
     public Voto() {

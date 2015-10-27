@@ -21,6 +21,7 @@ import javax.persistence.Transient;
 /**
  *
  * @author Luiz Henrique
+ * Representa um Restaurante que no contexto é o local do almoço.
  */
 @Entity
 @Table(name = "restaurante")
@@ -28,17 +29,35 @@ public class Restaurante implements Serializable {
 
     @Id
     @GeneratedValue
+    /** 
+     * Identificador único do Restaurante.
+     */
     private Integer id;
     private String nome;
+    /**
+     * Preço em relação ao tipo de almoço, caso exista diversas opções diferentes deve ser informado um valor em média do preço da refeição do restaurante.
+     */
     private float preco;
     private String endereco;
     @Column(name = "tipo_comida")
+    /**
+     * Relacionado ao Gênero da refeição do restaurante. Exemplo: Japonesa, Chinesa, Sanduíches.
+     */
     private String tipoComida;
     @Column(name = "tipo_almoco")
+    /**
+     * Relacionado a forma de se servir no restaurante. Exemplo: Por kilo, a la carte, self service, fast food.
+     */
     private String tipoAlmoco;
     @Column(name = "distancia")
+    /**
+     * Distância do local de trabalho até o restaurante.
+     */
     private float distanciaAPartirDoLocalDeTrabalho;
     @Column(name = "formas_pagamento")
+    /**
+     * Formas de pagamento que o restaurante oferece. Exemplo: Dinheiro, cartão, cheque.
+     */
     private String formasDePagamento;
     @Column(name = "possui_estacionamento")
     private boolean possuiEstacionamentoParticular;
@@ -52,9 +71,15 @@ public class Restaurante implements Serializable {
     private Time horaEncerramento;
 
     @Column(name = "horario_pico")
+    /**
+     * É o horário onde existe o maior índice de movimento no dia, indicando filas, mesas lotadas entre outros.
+     */
     private Time horarioDePico;
 
     @OneToMany(mappedBy = "restaurante", fetch = FetchType.LAZY, cascade = CascadeType.ALL, targetEntity = Voto.class)
+    /**
+     * Lista com os votos que o restaurante já recebeu por parte dos funcionários.
+     */
     private List<Voto> listaVotos;
 
     public Restaurante() {

@@ -27,6 +27,7 @@ import javax.persistence.UniqueConstraint;
 /**
  *
  * @author Luiz Henrique
+ * Representa um Funcionário da empresa que no contexto é responsável por eleger o local do almoço.
  */
 @Entity
 @Table(name = "funcionario")
@@ -34,21 +35,40 @@ public class Funcionario implements Serializable {
 
     @Id
     @GeneratedValue
+    /**
+     * Identificador único do funcionário.
+     */
     private Integer id;
     private String nome;
     @Column(unique = true)
     private String email;
     @Column(name = "codigo_func_empresa", unique = true)
+    /**
+     * Identificador único do funcionário dentro da empresa, que confirme que realmente ele é um funcionário.
+     */
     private String codigoFuncionarioNaEmpresa;
+    
+    /**
+     * Senha de acesso ao sistema.
+     */
     private String senha;
     private boolean ativo;
     @Column(unique = true)
+    /**
+     * Login de acesso ao sistema.
+     */
     private String login;
     @Column(name = "data_cadastro", nullable = false)
     @Temporal(javax.persistence.TemporalType.DATE)
+    /**
+     * Data de cadastro do funcionário no sistema.
+     */
     private Date dataCadastro;
 
     @OneToMany(mappedBy = "funcionario", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    /**
+     * Lista com todos os votos que o funcionário já realizou nas eleições dentro do sistema.
+     */
     private List<Voto> votosFuncionario;
 
     @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
@@ -59,6 +79,9 @@ public class Funcionario implements Serializable {
             joinColumns = @JoinColumn(name = "funcionario"))
 
     @Column(name = "permissao", length = 50)
+    /**
+     * Lista com as permissões do funcionário dentro do sistema.
+     */
     private Set<String> permissao = new HashSet<String>();
 
     public Integer getId() {
