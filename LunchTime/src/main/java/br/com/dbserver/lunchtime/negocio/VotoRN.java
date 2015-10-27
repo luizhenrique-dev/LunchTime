@@ -33,15 +33,17 @@ public class VotoRN {
      * um voto.
      *
      * @param voto é o voto que se deseja persistir.
+     * @return true caso a operação seja realizada com sucesso.
      * @throws RNException exceção lançada caso o voto não possa ser persistido.
      */
-    public void salvar(Voto voto) throws RNException {
+    public boolean salvar(Voto voto) throws RNException {
         Integer codigo = voto.getId();
         if ((codigo == null || codigo == 0) && votoDisponivelDia(voto.getFuncionario(), voto.getDataVoto())) {
             this.votoDAO.salvar(voto);
         } else {
             this.votoDAO.atualizar(voto);
         }
+        return true;
     }
 
     /**
@@ -49,9 +51,11 @@ public class VotoRN {
      * voto.
      *
      * @param voto é o voto a ser excluído.
+     * @return true caso a operação seja realizada com sucesso.
      */
-    public void excluir(Voto voto) {
+    public boolean excluir(Voto voto) {
         this.votoDAO.excluir(voto);
+        return true;
     }
 
     /**

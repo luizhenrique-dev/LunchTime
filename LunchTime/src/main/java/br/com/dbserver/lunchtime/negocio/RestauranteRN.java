@@ -47,15 +47,18 @@ public class RestauranteRN {
      * @param horaAbertura é a hora em que o restaurante abre.
      * @param horaEncerramento é a hora em que o restaurante fecha.
      * @param horarioDePico é a hora de maior movimento no restaurante.
+     * @return true - caso a operação seja realizada com sucesso
      */
-    public void salvar(Restaurante restaurante, Date horaAbertura, Date horaEncerramento, Date horarioDePico) {
+    public boolean salvar(Restaurante restaurante, Date horaAbertura, Date horaEncerramento, Date horarioDePico) {
         Integer codigo = restaurante.getId();
         if (codigo == null || codigo == 0) {
             preencheHorarios(restaurante, horaAbertura, horaEncerramento, horarioDePico);
             this.restauranteDAO.salvar(restaurante);
+            return true;
         } else {
             preencheHorarios(restaurante, horaAbertura, horaEncerramento, horarioDePico);
             this.restauranteDAO.atualizar(restaurante);
+            return true;
         }
     }
 
@@ -64,9 +67,11 @@ public class RestauranteRN {
      * restaurante.
      *
      * @param restaurante
+     * @return true caso a operação seja realizada com sucesso.
      */
-    public void excluir(Restaurante restaurante) {
+    public boolean excluir(Restaurante restaurante) {
         this.restauranteDAO.excluir(restaurante);
+        return true;
     }
 
     /**

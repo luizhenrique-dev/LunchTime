@@ -82,21 +82,24 @@ public class FuncionarioRN {
      * formulário de cadastro.
      *
      * @param funcionario é o funcionario que se deseja persistir.
+     * @return true caso a operação seja realizada com sucesso.
      * @throws RNException exceção lançada caso o funcionario não possa ser
      * persistido.
      */
-    public void salvar(Funcionario funcionario) throws RNException {
+    public boolean salvar(Funcionario funcionario) throws RNException {
         Integer codigo = funcionario.getId();
         if ((codigo == null || codigo == 0) && validaNovoFuncionario(funcionario)) {
             funcionario.setNome(funcionario.getNome().toUpperCase());
             funcionario.getPermissao().add("ROLE_USUARIO");
             funcionario.setDataCadastro(new Date(System.currentTimeMillis()));
             this.funcionarioDAO.salvar(funcionario);
+            return true;
         } else {
             funcionario.setLogin(buscaPorEmail(funcionario.getEmail()).getLogin());
             funcionario.setCodigoFuncionarioNaEmpresa(buscaPorEmail(funcionario.getEmail()).getCodigoFuncionarioNaEmpresa());
             funcionario.setDataCadastro(buscaPorEmail(funcionario.getEmail()).getDataCadastro());
             this.funcionarioDAO.atualizar(funcionario);
+            return true;
         }
     }
 
@@ -105,9 +108,11 @@ public class FuncionarioRN {
      * funcionário.
      *
      * @param funcionario é o funcionário a ser excluído.
+     * @return true caso a operação seja realizada com sucesso.
      */
-    public void excluir(Funcionario funcionario) {
+    public boolean excluir(Funcionario funcionario) {
         this.funcionarioDAO.excluir(funcionario);
+        return true;
     }
 
     /**
