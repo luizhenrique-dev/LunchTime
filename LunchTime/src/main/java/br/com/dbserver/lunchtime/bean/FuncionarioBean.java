@@ -17,13 +17,23 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
 /**
+ * Classe responsável por ser uma ponte entre a regra de negócio da entidade
+ * Funcionario com as Views relacionadas a mesma. "Delegando" funções
+ * específicas para cada View.
  *
  * @author Luiz Henrique
+ */
+/**
+ * Anotação que reflete o nome a ser utilizado para chamar essa classe através
+ * da View.
  */
 @ManagedBean(name = "funcionarioBean")
 @RequestScoped
 public class FuncionarioBean {
 
+    /**
+     * Este é o objeto utilizado para manipular inserções, edições e deleções.
+     */
     private Funcionario funcionario = new Funcionario();
     private List<Funcionario> lista;
     private String senhaCriptografada;
@@ -114,6 +124,12 @@ public class FuncionarioBean {
         this.confirmaSenha = confirmaSenha;
     }
 
+    /**
+     * Método responsável por criptografar a senha informada pelo usuário.
+     *
+     * @param senha é a senha em texto plano.
+     * @return senha criptografada após execução do algoritmo SHA256.
+     */
     private String criptografaSenha(String senha) {
         if (senha != null && senha.trim().length() == 0) {
             return this.senhaCriptografada;
@@ -123,6 +139,14 @@ public class FuncionarioBean {
         }
     }
 
+    /**
+     * Método responsável por enviar mensagens para as views de acordo com as
+     * operações realizadas.
+     *
+     * @param severidade é o grau da mensagem: erro, aviso, informativo.
+     * @param titulo é o título da mensagem.
+     * @param conteudo é o conteúdo da mensagem.
+     */
     private void enviaMensagemFaces(Severity severidade, String titulo, String conteudo) {
         FacesContext context = FacesContext.getCurrentInstance();
         FacesMessage facesMessage = new FacesMessage(severidade, conteudo, titulo);

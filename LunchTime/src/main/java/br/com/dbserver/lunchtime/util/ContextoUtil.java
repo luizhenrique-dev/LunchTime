@@ -11,7 +11,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
 /**
- *
+ * Classe responsável por obter as informações do contexto do sistema no momento da requisição.
  * @author Luiz Henrique
  */
 public class ContextoUtil {

@@ -20,13 +20,23 @@ import javax.faces.context.FacesContext;
 import org.primefaces.event.SelectEvent;
 
 /**
+ * Classe responsável por ser uma ponte entre a regra de negócio da entidade
+ * Voto com as Views relacionadas a mesma. "Delegando" funções específicas para
+ * cada View.
  *
  * @author Luiz Henrique
+ */
+/**
+ * Anotação que reflete o nome a ser utilizado para chamar essa classe através
+ * da View.
  */
 @ManagedBean(name = "votoBean")
 @ViewScoped
 public class VotoBean {
 
+    /**
+     * Este é o objeto utilizado para manipular inserções, edições e deleções.
+     */
     private Voto voto = new Voto();
     private List<Voto> lista;
     private List<Voto> listaVotosRestaurante;
@@ -117,12 +127,22 @@ public class VotoBean {
         this.restauranteSelecionado = restauranteSelecionado;
     }
 
+    /**
+     * Método responsável por enviar mensagens para as views de acordo com as operações realizadas.
+     * @param severidade é o grau da mensagem: erro, aviso, informativo.
+     * @param titulo é o título da mensagem.
+     * @param conteudo é o conteúdo da mensagem.
+     */
     private void enviaMensagemFaces(Severity severidade, String titulo, String conteudo) {
         FacesContext context = FacesContext.getCurrentInstance();
         FacesMessage facesMessage = new FacesMessage(severidade, conteudo, titulo);
         context.addMessage(null, facesMessage);
     }
 
+    /**
+     * Método responsável por receber a requisição de seleção de um restaurante na view e retornar o objeto selecionado.
+     * @param event é o evento de seleção o qual irá recuperar o objeto selecionado.
+     */
     public void onRowSelectRestaurante(SelectEvent event) {
         this.restauranteSelecionado = (Restaurante) event.getObject();
         voto.setRestaurante(this.restauranteSelecionado);

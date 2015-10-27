@@ -10,6 +10,9 @@ import javax.servlet.*;
 import org.hibernate.SessionFactory;
 
 /**
+ * Classe utilitária para filtrar e centralizar todas as requisições Hibernate com o
+ * objetivo: Abrir Sessions do Hibernate; Associar Sessions a ThreadsLocais;
+ * Fechar Sessions associadas.
  *
  * @author Luiz Henrique
  */

@@ -16,16 +16,30 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
 /**
+ * Classe responsável por ser uma ponte entre a regra de negócio da entidade
+ * Restaurante com as Views relacionadas a mesma. "Delegando" funções
+ * específicas para cada View.
  *
  * @author Luiz Henrique
+ */
+/**
+ * Anotação que reflete o nome a ser utilizado para chamar essa classe através
+ * da View.
  */
 @ManagedBean(name = "restauranteBean")
 @RequestScoped
 public class RestauranteBean {
 
+    /**
+     * Este é o objeto utilizado para manipular inserções, edições e deleções.
+     */
     private Restaurante restaurante = new Restaurante();
     private List<Restaurante> lista;
-    private Date horaAbertura, horaEncerramento, horarioDePico, dataFiltroVotos = new Date(System.currentTimeMillis());
+    private Date horaAbertura, horaEncerramento, horarioDePico;
+    /**
+     * É o dia escolhido na view para se obter o resultado da votação de cada restaurante.
+     */
+    private Date dataFiltroVotos = new Date(System.currentTimeMillis());
 
     public String novo() {
         this.restaurante = new Restaurante();
@@ -110,12 +124,23 @@ public class RestauranteBean {
         this.dataFiltroVotos = dataFiltroVotos;
     }
 
+    /**
+     * Método responsável por enviar mensagens para as views de acordo com as
+     * operações realizadas.
+     *
+     * @param severidade é o grau da mensagem: erro, aviso, informativo.
+     * @param titulo é o título da mensagem.
+     * @param conteudo é o conteúdo da mensagem.
+     */
     private void enviaMensagemFaces(Severity severidade, String titulo, String conteudo) {
         FacesContext context = FacesContext.getCurrentInstance();
         FacesMessage facesMessage = new FacesMessage(severidade, conteudo, titulo);
         context.addMessage(null, facesMessage);
     }
 
+    /**
+     * Método responsável por atualizar a lista a cada nova requisição de pesquisa (filtragem).
+     */
     public void filtrarPorDia() {
         if (this.lista != null) {
             lista.clear();

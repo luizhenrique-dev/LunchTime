@@ -14,6 +14,8 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 /**
+ * Classe responsável por obter o usuário logado no sistema no momento da
+ * requisição.
  *
  * @author Luiz Henrique
  */

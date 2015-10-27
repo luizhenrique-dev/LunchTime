@@ -11,6 +11,10 @@ import org.hibernate.service.ServiceRegistry;
  * and open the template in the editor.
  */
 /**
+ * Classe utilitária para gerenciamento do Hibernate, tem como objetivos:
+ *
+ * Construir a SessionFactory de acordo com o arquivo de configuração;
+ * Inicializar uma única instância da SessionFactory do Hibernate.
  *
  * @author Luiz Henrique
  */

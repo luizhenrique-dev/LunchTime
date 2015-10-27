@@ -14,14 +14,15 @@ and open the template in the editor.
         <ui:define name="titulo">Escolher Restaurante</ui:define>
         <ui:define name="corpo">
             <h:form id="novaVoto">
-                <h3>Atenção! Você só pode votar uma vez por dia.</h3>
-                <p:growl id="growl" sticky="true" showDetail="true" life="20"/>
                 <p:messages id="messages" autoUpdate="true" showDetail="true" closable="true"/>
+                <h3>Atenção! Você só pode votar uma vez por dia.</h3>
+                <h4>Clique no botão 'Escolher Restaurante' e selecione aquele em que deseja votar</h4>
+                <p:growl id="growl" sticky="true" showDetail="true" life="20"/>       
                 <p:commandButton id="movieBtn" value="Escolher Restaurante" type="button" styleClass="botaoEsquerda" onclick="PF('dlg1').show();"/>
                 <br /><br />
                 <p:panelGrid columns="2" columnClasses="colunaEsquerda,colunaDireita">
                     <p:outputLabel id="labelRestaurante" value="Restaurante: " for="campoRestaurante" style="font-weight: bold;"/>
-                    <p:inputText id="campoRestaurante" value="#{votoBean.restauranteSelecionado.nome}" required="true" requiredMessage="Escolha o restaurante em que você vai votar!" readonly="true" size="50"/>
+                    <p:inputText id="campoRestaurante" value="#{votoBean.restauranteSelecionado.nome}" required="true" requiredMessage="Escolha o restaurante em que vocÃª vai votar!" readonly="true" size="50"/>
 
                     <p:outputLabel value="Dia do Voto:" for="datavoto" style="font-weight: bold;"/>
                     <p:calendar id="datavoto" value="#{votoBean.voto.dataVoto}" required="true" effect="fold" mindate="#{votoBean.voto.dataVoto}" pattern="dd/MM/yyyy" requiredMessage="Informe a data do voto."/>

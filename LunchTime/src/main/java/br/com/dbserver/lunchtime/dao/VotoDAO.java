@@ -13,8 +13,8 @@ import java.util.List;
 
 /**
  *
- * @author Luiz Henrique Interface relacionada a entidade Voto a ser
- * implementada pelo componente responsável pela persistência.
+ * @author Luiz Henrique 
+ * Interface relacionada a entidade Voto a ser implementada pelo componente responsável pela persistência.
  */
 public interface VotoDAO {
 

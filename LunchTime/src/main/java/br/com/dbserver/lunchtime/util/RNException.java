@@ -6,7 +6,7 @@
 package br.com.dbserver.lunchtime.util;
 
 /**
- *
+ * Exceção a ser lançada quando ocorrer uma condição que altera o fluxo normal da execução do programa no contexto de regra de negócio.
  * @author Luiz Henrique
  */
 public class RNException extends Exception {

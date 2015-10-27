@@ -13,10 +13,10 @@ import br.com.dbserver.lunchtime.dao.impl.RestauranteDAOHibernate;
 import br.com.dbserver.lunchtime.dao.impl.VotoDAOHibernate;
 
 /**
+ * Classe responsável por criar as instâncias das classes Hibernate da camada de acesso aos dados.
  *
  * @author Luiz Henrique
  */
-
 public class DAOFactory {
 
     public static FuncionarioDAO criarFuncionarioDAO() {
