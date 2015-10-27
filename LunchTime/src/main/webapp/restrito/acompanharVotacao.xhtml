@@ -12,17 +12,30 @@ and open the template in the editor.
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <ui:composition template="/templates/interna.xhtml">
         <ui:define name="titulo" >
-            Acompanhar Votação
+            Acompanhar Votações
         </ui:define>
 
         <ui:define name="corpo">
+            <h:form id="filtro">
+                <p:growl id="growl" sticky="true" life="20"/>
+                <p:messages id="messages" autoUpdate="true"  closable="true"/>
+                <br />
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Escolha o Dia" for="data"/>
+                    <p:calendar id="data" value="#{restauranteBean.dataFiltroVotos}" navigator="true" effect="fold" pattern="dd/MM/yyyy" />
+                </p:panelGrid>
+                <br />
+                <p:commandButton value="Pesquisar" action="#{restauranteBean.filtrarPorDia}" update=":listagem" />
+
+            </h:form>
+            <br />
             <h:form id="listagem">
                 <p:dataTable id="tabelaRestaurantes" value="#{restauranteBean.lista}" var="restaurante" scrollable="false" sortOrder="DESCENDING" sortBy="#{restaurante.quantidadeVotosDia}" 
-                             rowKey="#{restaurante.id}" paginator="true" rows="12" rowIndexVar="index" emptyMessage="Nenhum restaurante encontrado.">
+                             rowKey="#{restaurante.id}" paginator="true" rows="8" rowIndexVar="index" emptyMessage="Nenhum restaurante encontrado.">
                     <f:facet name="caption">
-                        A listagem a seguir exibe a relação de todos os restaurantes cadastrados no sistema e seus respectivo votos.
+                        A listagem a seguir exibe a relação de todos os restaurantes cadastrados no sistema e seus respectivo votos no dia escolhido.
                     </f:facet>
-                    <f:facet name="header">Votos de Hoje em Cada Restaurante</f:facet>
+                    <f:facet name="header">Votos de Cada Restaurante no dia Escolhido</f:facet>
 
                     <p:column filterBy="#{restaurante.nome}" headerText="Nome">
                         <h:outputText value="#{restaurante.nome}" />
@@ -48,12 +61,10 @@ and open the template in the editor.
                     </p:column>
                     <p:column width="70" headerText="Abertura (hrs)">
                         <h:outputText value="#{restaurante.horaAbertura}">
-                            <f:convertDateTime pattern="hh:mm" />
                         </h:outputText>
                     </p:column>
                     <p:column width="80" headerText="Encerramento (hrs)">
                         <h:outputText value="#{restaurante.horaEncerramento}">
-                            <f:convertDateTime pattern="hh:mm" />
                         </h:outputText>
                     </p:column>
                     <p:column width="45">

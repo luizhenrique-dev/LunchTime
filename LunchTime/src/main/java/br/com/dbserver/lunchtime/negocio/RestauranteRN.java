@@ -46,16 +46,16 @@ public class RestauranteRN {
         this.restauranteDAO.excluir(restaurante);
     }
 
-    public List<Restaurante> listar() throws DAOException {
+    public List<Restaurante> listar(Date diaEscolhido) throws DAOException {
         List<Restaurante> lista = this.restauranteDAO.listar();
-        preencheVotosDoDiaRestaurante(lista);
+        preencheVotosDoDiaRestaurante(lista, diaEscolhido);
         return lista;
     }
 
-    private void preencheVotosDoDiaRestaurante(List<Restaurante> lista) throws DAOException {
+    private void preencheVotosDoDiaRestaurante(List<Restaurante> lista, Date diaEscolhido) throws DAOException {
         VotoDAO votoDAO = DAOFactory.criarVotoDAO();
         for (Restaurante restaurante : lista) {
-            List<Voto> listaVotosRestauranteHoje = votoDAO.listarVotosDoDia(restaurante, new Date(System.currentTimeMillis()));
+            List<Voto> listaVotosRestauranteHoje = votoDAO.listarVotosDoDia(restaurante, diaEscolhido);
             restaurante.setQuantidadeVotosDia(listaVotosRestauranteHoje.size());
         }
     }

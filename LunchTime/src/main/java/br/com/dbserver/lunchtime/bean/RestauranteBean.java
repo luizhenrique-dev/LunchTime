@@ -28,7 +28,7 @@ public class RestauranteBean {
 
     private Restaurante restaurante = new Restaurante();
     private List<Restaurante> lista;
-    private Date horaAbertura, horaEncerramento, horarioDePico;
+    private Date horaAbertura, horaEncerramento, horarioDePico, dataFiltroVotos = new Date(System.currentTimeMillis());
 
     public String novo() {
         this.restaurante = new Restaurante();
@@ -75,7 +75,7 @@ public class RestauranteBean {
         if (this.lista == null) {
             try {
                 RestauranteRN restauranteRN = new RestauranteRN();
-                this.lista = restauranteRN.listar();
+                this.lista = restauranteRN.listar(dataFiltroVotos);
             } catch (DAOException ex) {
                 Logger.getLogger(RestauranteBean.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -115,9 +115,24 @@ public class RestauranteBean {
         this.horarioDePico = horarioDePico;
     }
 
+    public Date getDataFiltroVotos() {
+        return dataFiltroVotos;
+    }
+
+    public void setDataFiltroVotos(Date dataFiltroVotos) {
+        this.dataFiltroVotos = dataFiltroVotos;
+    }
+
     private void enviaMensagemFaces(Severity severidade, String titulo, String conteudo) {
         FacesContext context = FacesContext.getCurrentInstance();
         FacesMessage facesMessage = new FacesMessage(severidade, conteudo, titulo);
         context.addMessage(null, facesMessage);
+    }
+
+    public void filtrarPorDia() {
+        if (this.lista != null) {
+            lista.clear();
+        }
+        getLista();
     }
 }
