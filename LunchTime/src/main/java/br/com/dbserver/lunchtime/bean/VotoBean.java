@@ -5,11 +5,11 @@
  */
 package br.com.dbserver.lunchtime.bean;
 
-import br.com.dbserver.lunchtime.entidade.Funcionario;
 import br.com.dbserver.lunchtime.entidade.Restaurante;
 import br.com.dbserver.lunchtime.entidade.Voto;
 import br.com.dbserver.lunchtime.negocio.VotoRN;
 import br.com.dbserver.lunchtime.util.ContextoUtil;
+import br.com.dbserver.lunchtime.util.RNException;
 import java.util.Date;
 import java.util.List;
 import javax.faces.application.FacesMessage;
@@ -39,29 +39,21 @@ public class VotoBean {
         return "/publico/cadastrarVoto";
     }
 
-    public String salvar() {
-        VotoRN votoRN = new VotoRN();
-        ContextoBean contextoBean = ContextoUtil.getContextoBean();
-        Funcionario funcionario = contextoBean.getFuncionarioLogado();
+    public void salvar() {
         if (restauranteSelecionado != null) {
-            if (!votoRN.buscaVoto(funcionario, voto.getDataVoto())) {
-                voto.setFuncionario(funcionario);
+            try {
+                VotoRN votoRN = new VotoRN();
+                ContextoBean contextoBean = ContextoUtil.getContextoBean();
+                voto.setFuncionario(contextoBean.getFuncionarioLogado());
                 votoRN.salvar(this.voto);
                 enviaMensagemFaces(FacesMessage.SEVERITY_INFO, "Clique em 'Acompanhar Votação' no menu 'Eleições' para mais informações.", "Voto realizado com sucesso!");
                 novo();
-                return "votos";
-            } else {
-                enviaMensagemFaces(FacesMessage.SEVERITY_ERROR, "Você já votou neste dia!", "Erro:");
-                return null;
+            } catch (RNException ex) {
+                enviaMensagemFaces(FacesMessage.SEVERITY_ERROR, ex.getMessage(), "Erro:");
             }
         } else {
             enviaMensagemFaces(FacesMessage.SEVERITY_WARN, "Erro de validação", "Escolha o restaurante em que você vai votar!");
-            return null;
         }
-    }
-
-    public String listarVotos() {
-        return "/restrito/votos";
     }
 
     public void excluir() {

@@ -10,6 +10,7 @@ import br.com.dbserver.lunchtime.entidade.Funcionario;
 import br.com.dbserver.lunchtime.entidade.Restaurante;
 import br.com.dbserver.lunchtime.entidade.Voto;
 import br.com.dbserver.lunchtime.util.DAOFactory;
+import br.com.dbserver.lunchtime.util.RNException;
 import java.util.Date;
 import java.util.List;
 
@@ -25,9 +26,9 @@ public class VotoRN {
         this.votoDAO = DAOFactory.criarVotoDAO();
     }
 
-    public void salvar(Voto voto) {
+    public void salvar(Voto voto) throws RNException {
         Integer codigo = voto.getId();
-        if (codigo == null || codigo == 0) {
+        if ((codigo == null || codigo == 0) && votoDisponivelDia(voto.getFuncionario(), voto.getDataVoto())) {
             this.votoDAO.salvar(voto);
         } else {
             this.votoDAO.atualizar(voto);
@@ -58,9 +59,9 @@ public class VotoRN {
         return this.votoDAO.listarVotosDoDia(restaurante, diaEscolhido);
     }
 
-    public boolean buscaVoto(Funcionario funcionario, Date dataEscolhida) {
-        if (this.votoDAO.buscarVoto(funcionario, dataEscolhida) == null) {
-            return false;
+    public boolean votoDisponivelDia(Funcionario funcionario, Date dataEscolhida) throws RNException{
+        if (this.votoDAO.buscarVoto(funcionario, dataEscolhida) != null) {
+            throw new RNException("Você já votou neste dia! Seu voto não foi efetivado.");
         }
         return true;
     }
