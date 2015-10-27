@@ -41,17 +41,14 @@ and open the template in the editor.
 
                     <p:outputLabel for="horaAbertura" value="Horário de abertura:" />
                     <p:outputLabel id="horaAbertura" value="#{restauranteBean.restaurante.horaAbertura}">
-                        <f:convertDateTime pattern="hh:mm a" />
                     </p:outputLabel> 
 
                     <p:outputLabel for="horaEncerra" value="Horário que fecha:" />
                     <p:outputLabel id="horaEncerra" value="#{restauranteBean.restaurante.horaEncerramento}">
-                        <f:convertDateTime pattern="hh:mm a" />
                     </p:outputLabel> 
 
                     <p:outputLabel for="horaDePico" value="Horário de pico:" />
                     <p:outputLabel id="horaDePico" value="#{restauranteBean.restaurante.horarioDePico}">
-                        <f:convertDateTime pattern="hh:mm a" />
                     </p:outputLabel> 
 
                     <p:outputLabel value="Possui estacionamento particular?" for="estacionamento" />

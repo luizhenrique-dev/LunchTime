@@ -34,11 +34,10 @@ public class RestauranteRN {
     public void salvar(Restaurante restaurante, Date horaAbertura, Date horaEncerramento, Date horarioDePico) throws DAOException {
         Integer codigo = restaurante.getId();
         if (codigo == null || codigo == 0) {
-            restaurante.setHoraAbertura(new Time(horaAbertura.getTime()));
-            restaurante.setHoraEncerramento(new Time(horaEncerramento.getTime()));
-            restaurante.setHorarioDePico(new Time(horarioDePico.getTime()));
+            preencheHorarios(restaurante, horaAbertura, horaEncerramento, horarioDePico);
             this.restauranteDAO.salvar(restaurante);
         } else {
+            preencheHorarios(restaurante, horaAbertura, horaEncerramento, horarioDePico);
             this.restauranteDAO.atualizar(restaurante);
         }
     }
@@ -53,11 +52,23 @@ public class RestauranteRN {
         return lista;
     }
 
-    private void preencheVotosDoDiaRestaurante(List<Restaurante> lista) throws DAOException{
+    private void preencheVotosDoDiaRestaurante(List<Restaurante> lista) throws DAOException {
         VotoDAO votoDAO = DAOFactory.criarVotoDAO();
         for (Restaurante restaurante : lista) {
             List<Voto> listaVotosRestauranteHoje = votoDAO.listarVotosDoDia(restaurante, new Date(System.currentTimeMillis()));
             restaurante.setQuantidadeVotosDia(listaVotosRestauranteHoje.size());
+        }
+    }
+
+    private void preencheHorarios(Restaurante restaurante, Date horaAbertura, Date horaEncerramento, Date horarioDePico) {
+        if (horaEncerramento != null) {
+            restaurante.setHoraEncerramento(new Time(horaEncerramento.getTime()));
+        }
+        if (horaAbertura != null) {
+            restaurante.setHoraAbertura(new Time(horaAbertura.getTime()));
+        }
+        if (horarioDePico != null) {
+            restaurante.setHorarioDePico(new Time(horarioDePico.getTime()));
         }
     }
 }

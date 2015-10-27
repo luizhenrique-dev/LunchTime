@@ -48,7 +48,7 @@ and open the template in the editor.
                         <div style="width: 100%; text-align: center;">  
                             <p:commandLink action="#{restauranteBean.verDetalhes}" update=":listagem:tabelaRestaurantes">
                                 <h:graphicImage library="imagens" name="detalhes16.png" style="border: 0" />
-                                <f:setPropertyActionListener target="#{restauranteUtilBean.restaurante}" value="#{restaurante}" />
+                                <f:setPropertyActionListener target="#{restauranteBean.restaurante}" value="#{restaurante}" />
                             </p:commandLink>
                         </div>
                     </p:column>
